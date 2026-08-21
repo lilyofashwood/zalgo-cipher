@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🜃 z⃤͏̃͏̩͏̑͏̈͏͑͏͈͏͗͏̩͏̯͏̃͏̳͏̤a⃪͏̃͏͗͏̰͏̹͏̜͏̿͏̆͏͆͏̃͏̈͏͈͏͗l⃒͏̩͏͜͏̤͏̰͏̮͏̤͏̰͏̹͏̃͏̹͏̈͏̰g͏̜͏̩͏̈͏̹͏̆͏̮͏͆͏̈͏̰͏̎͏͗o҈͏͑͏͝͏̰͏̍͏̈͏͗͏̈͏͝͏̰͏̜͏̈-cipher ⏾𓃠⟡</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+        :root {
+            --panel-height: 280px;
+            --box-height: 120px;
+            --ui-scale: 1.2;
+            --font-sans: "Space Grotesk", "Inter", "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
+            --font-display: "Space Grotesk", "Inter", "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
+            --font-mono: "DM Mono", "SF Mono", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
+            --font-zalgo: "Noto Sans", "Noto Sans Symbols 2", "Noto Sans Symbols", "DejaVu Sans", "Segoe UI Symbol", "Apple Symbols", "Arial Unicode MS", "Lucida Sans Unicode", sans-serif;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-sans);
+            background: #0a0a0f;
+            background-image: url('bg_image.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #e0e0e0;
+            min-height: 100vh;
+            margin: 0;
+            padding: 14px;
+            zoom: var(--ui-scale);
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        @supports not (zoom: 1) {
+            .container {
+                transform: scale(var(--ui-scale));
+                transform-origin: top center;
+                width: calc(100% / var(--ui-scale));
+            }
+        }
+        h1 {
+            text-align: center;
+            font-family: var(--font-display);
+            color: #ffffff;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin: 6px 0 10px;
+            padding: 10px;
+            line-height: 1.2;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .title-stack {
+            position: relative;
+            display: inline-block;
+            line-height: 1;
+            isolation: isolate;
+        }
+        .title-stack::before {
+            content: attr(data-glow);
+            position: absolute;
+            inset: 0;
+            color: #b388ff;
+            opacity: 0.85;
+            text-shadow: 0 0 10px rgba(179, 136, 255, 0.65), 0 0 26px rgba(179, 136, 255, 0.45);
+            pointer-events: none;
+            white-space: pre;
+            z-index: 0;
+        }
+        .title-zalgo {
+            position: relative;
+            z-index: 1;
+            color: #b388ff;
+            display: inline-block;
+            font: inherit;
+            letter-spacing: inherit;
+        }
+        .title-base {
+            position: absolute;
+            z-index: 1;
+            inset: 0;
+            color: #ffffff;
+            display: inline-block;
+            font: inherit;
+            letter-spacing: inherit;
+            pointer-events: none;
+        }
+        .title-suffix {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(179, 136, 255, 0.6), 0 0 22px rgba(179, 136, 255, 0.35);
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 11px;
+            margin-bottom: 18px;
+        }
+        .section {
+            background: #141419;
+            border: 1px solid #2a2a35;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+        .encode-grid,
+        .decode-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 14px;
+            align-items: stretch;
+        }
+        .encode-grid .section,
+        .decode-grid .section {
+            margin-bottom: 6px;
+        }
+        @media (max-width: 720px) {
+            .encode-grid,
+            .decode-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 721px) {
+            #decodeGrid .decode-input {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            #decodeGrid #cipherKeySection {
+                grid-column: 2;
+                grid-row: 2;
+            }
+            #decodeGrid .decode-output {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            #decodeGrid .decode-links {
+                grid-column: 2;
+                grid-row: 1;
+            }
+        }
+        .encode-grid .section,
+        .decode-grid .section {
+            height: var(--panel-height);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: rgba(20, 20, 25, 0.75);
+            box-shadow: 0 0 18px rgba(179, 136, 255, 0.18);
+        }
+        .encode-grid .output-textarea {
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+        #cipherKeySection .cipher-key {
+            flex: 1 1 auto;
+            overflow: auto;
+        }
+        .decode-links {
+            justify-content: flex-start;
+            align-items: stretch;
+            text-align: left;
+        }
+        .decode-links .links-body {
+            margin-top: auto;
+            margin-bottom: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+            width: 100%;
+        }
+        .decode-links label {
+            width: 100%;
+            text-align: center;
+        }
+        .decode-links .link {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        .section-title {
+            color: #b388ff;
+            font-size: 14px;
+            text-transform: none;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+        .section-subtitle {
+            color: #777;
+            font-size: 10px;
+            text-transform: none;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+        }
+        label {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 6px;
+            text-transform: none;
+            letter-spacing: 0.8px;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid #2a2a35;
+            border-radius: 8px;
+            padding: 10px;
+            color: #e0e0e0;
+            font-size: 15px;
+            font-family: inherit;
+            text-align: center;
+            resize: vertical;
+            margin-bottom: 12px;
+            min-height: var(--box-height);
+            line-height: 1.5;
+        }
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: #b388ff;
+        }
+        .main-box {
+            height: var(--box-height) !important;
+            min-height: var(--box-height) !important;
+            max-height: var(--box-height) !important;
+            resize: none;
+            background-color: rgba(10, 10, 15, 0.9);
+            box-shadow: 0 0 12px rgba(179, 136, 255, 0.12);
+        }
+        .output-textarea {
+            font-size: 15px;
+            line-height: 39px;
+            text-align: center;
+            padding-top: calc((var(--box-height) - 39px) / 2);
+            padding-bottom: 0;
+            overflow: auto;
+        }
+        .overlay-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .overlay-control input[type="range"] {
+            flex: 1;
+            accent-color: #b388ff;
+        }
+        .overlay-value {
+            font-size: 13px;
+            color: #b388ff;
+            min-width: 40px;
+            text-align: right;
+            letter-spacing: 1px;
+        }
+        .mini-btn {
+            padding: 6px 10px;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+        .zalgo-output {
+            font-size: 15px;
+            line-height: 1.7;
+            min-height: var(--box-height);
+            word-break: break-all;
+            text-align: center;
+            font-family: var(--font-zalgo);
+            font-variant-ligatures: none;
+        }
+        .zalgo-output::placeholder {
+            text-align: center;
+            color: #444;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .stat {
+            background: #0a0a0f;
+            border-radius: 8px;
+            padding: 5px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(179, 136, 255, 0.12);
+        }
+        .stat-value {
+            font-size: 14px;
+            color: #b388ff;
+            font-weight: 300;
+        }
+        .stat-label {
+            font-size: 8px;
+            color: #666;
+            text-transform: none;
+            letter-spacing: 0.6px;
+            margin-top: 2px;
+        }
+        .stat-value.warning {
+            color: #ff6b6b;
+        }
+        .stat-value.success {
+            color: #69db7c;
+        }
+        button {
+            background: #b388ff;
+            color: #0a0a0f;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: #c9a5ff;
+        }
+        button:disabled {
+            background: #444;
+            cursor: not-allowed;
+        }
+        .button-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .cipher-key {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .key-item {
+            background: #0a0a0f;
+            border-radius: 6px;
+            padding: 3px;
+            text-align: center;
+            display: grid;
+            grid-template-rows: 16px 1fr 20px;
+            align-items: center;
+            justify-items: center;
+            box-shadow: 0 0 10px rgba(179, 136, 255, 0.12);
+        }
+        .key-digit {
+            font-size: 15px;
+            color: #b388ff;
+            line-height: 1;
+            height: 16px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-top: -2px;
+        }
+        .key-sample {
+            font-size: 18px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+            justify-self: center;
+        }
+        .key-name {
+            font-size: 7px;
+            color: #666;
+            text-transform: none;
+            margin-top: 0;
+            height: 20px;
+            line-height: 1.1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .mode-btn {
+            background: rgba(179, 136, 255, 0.25);
+            border: 1px solid rgba(179, 136, 255, 0.45);
+            color: #d8c6ff;
+            padding: 8px 16px;
+            box-shadow: 0 0 10px rgba(179, 136, 255, 0.25);
+            text-shadow: 0 0 8px rgba(179, 136, 255, 0.35);
+        }
+        .mode-btn.active {
+            background: #b388ff;
+            color: #0a0a0f;
+            border-color: #b388ff;
+            box-shadow: 0 0 16px rgba(179, 136, 255, 0.45);
+        }
+        .error {
+            color: #ff6b6b;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+        .info {
+            color: #69db7c;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        #capacityMessage {
+            margin-top: 6px;
+        }
+        .mini-output {
+            margin-bottom: 0;
+        }
+        .mini-output + .mini-output {
+            margin-top: -4px;
+        }
+        .mini-output:last-child {
+            margin-bottom: 0;
+        }
+        .mini-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 3px;
+        }
+        .mini-header label {
+            margin: 0;
+        }
+        #decodedAsciiOutput {
+            font-size: 8px;
+            line-height: 1.1;
+            font-family: var(--font-mono);
+        }
+        .mini-text {
+            width: 100%;
+            margin-bottom: 2px;
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid #2a2a35;
+            border-radius: 8px;
+            padding: 2px 6px;
+            color: #e0e0e0;
+            font-size: 15px;
+            font-family: inherit;
+            text-align: center;
+            line-height: 1.2;
+            resize: none;
+            height: 42px;
+            min-height: 42px;
+            max-height: 42px;
+            overflow: auto;
+            box-shadow: 0 0 10px rgba(179, 136, 255, 0.12);
+        }
+        .mini-output:last-child .mini-text {
+            margin-bottom: 0;
+        }
+        .link {
+            color: #b388ff;
+            font-size: 13px;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="title-stack" aria-label="zalgo" data-glow="z⃤͏̃͏̩͏̑͏̈͏͑͏͈͏͗͏̩͏̯͏̃͏̳͏̤a⃪͏̃͏͗͏̰͏̹͏̜͏̿͏̆͏͆͏̃͏̈͏͈͏͗l⃒͏̩͏͜͏̤͏̰͏̮͏̤͏̰͏̹͏̃͏̹͏̈͏̰g͏̜͏̩͏̈͏̹͏̆͏̮͏͆͏̈͏̰͏̎͏͗o҈͏͑͏͝͏̰͏̍͏̈͏͗͏̈͏͝͏̰͏̜͏̈"><span class="title-zalgo">z⃤͏̃͏̩͏̑͏̈͏͑͏͈͏͗͏̩͏̯͏̃͏̳͏̤a⃪͏̃͏͗͏̰͏̹͏̜͏̿͏̆͏͆͏̃͏̈͏͈͏͗l⃒͏̩͏͜͏̤͏̰͏̮͏̤͏̰͏̹͏̃͏̹͏̈͏̰g͏̜͏̩͏̈͏̹͏̆͏̮͏͆͏̈͏̰͏̎͏͗o҈͏͑͏͝͏̰͏̍͏̈͏͗͏̈͏͝͏̰͏̜͏̈</span><span class="title-base" aria-hidden="true">za𝓁go</span></span><span class="title-suffix">-cipher ⏾𓃠⟡</span></h1>
+        <div class="mode-toggle">
+            <button class="mode-btn active" onclick="setMode('encode')" id="encodeBtn">encode</button>
+            <button class="mode-btn" onclick="setMode('decode')" id="decodeBtn">decode</button>
+        </div>
+
+        <!-- ENCODE MODE -->
+        <div id="encodeMode">
+            <div class="encode-grid" id="encodeGrid">
+                <div class="section">
+                <div class="section-title">secret spell</div>
+                <label>whisper to bind beneath the diacritics ⸸</label>
+                <textarea id="hiddenMessage" class="main-box" rows="4" placeholder="𓂀 𝖻𝐮𝗋𝗒 𝐚 𝗐𝗁𝐢𝗌𝗉𝐞𝗋 𝐢𝗇 𝗍𝗁𝐞 𝗆𝐚𝗋𝗄𝗌... 𓋹">notice me, senpai</textarea>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="asciiLength">0</div>
+                        <div class="stat-label">ascii digits</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="hiddenChars">0</div>
+                        <div class="stat-label">characters</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">visible vessel</div>
+                <label>harmless text the secret wears in public 𓂀</label>
+                <textarea id="carrierText" class="main-box" rows="4" placeholder="𓆣 𝗀𝐢𝗏𝐞 𝗍𝗁𝐞 𝗌𝐞𝖼𝗋𝐞𝗍 𝐚 𝗋𝐞𝐚𝖽𝐚𝖻𝗅𝐞 𝗌𝗄𝐢𝗇... ⏾">nyan</textarea>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="carrierChars">0</div>
+                        <div class="stat-label">characters</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="minCapacity">0</div>
+                        <div class="stat-label">min capacity (×6)</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="maxCapacity">0</div>
+                        <div class="stat-label">max capacity (×12)</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="capacityStatus">—</div>
+                        <div class="stat-label">status</div>
+                    </div>
+                </div>
+                <div id="capacityMessage"></div>
+            </div>
+
+            <div class="section output-panel">
+                <div class="section-title">glitched incantation</div>
+                <label>loose hauntings (stray marks, unique until exhausted)</label>
+                <div class="overlay-control">
+                    <input type="range" id="overlayRatio" min="0" max="100" step="5" value="35">
+                    <div class="overlay-value"><span id="overlayRatioValue">35</span>%</div>
+                </div>
+                <textarea class="zalgo-output main-box output-textarea" id="zalgoOutput" rows="4" readonly></textarea>
+                <div class="button-row">
+                    <button onclick="encode()" id="encodeAction">encode</button>
+                    <button onclick="copyOutput()">copy</button>
+                </div>
+            </div>
+                <div class="section" id="cipherKeySection">
+                    <div class="section-title">diacritic grimoire</div>
+                <div class="section-subtitle">base10 ascii digits wearing paired marks</div>
+            <div class="cipher-key">
+                <div class="key-item">
+                    <div class="key-digit">0</div>
+                    <div class="key-sample">a̩̍</div>
+                    <div class="key-name">vertical line</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">0′</div>
+                    <div class="key-sample">a̜͑</div>
+                    <div class="key-name">left half ring (alt)</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">1</div>
+                    <div class="key-sample">a̹͗</div>
+                    <div class="key-name">right half ring</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">1′</div>
+                    <div class="key-sample">ä̤</div>
+                    <div class="key-name">diaeresis (alt)</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">1″</div>
+                    <div class="key-sample">ã̰</div>
+                    <div class="key-name">tilde (alt)</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">2</div>
+                    <div class="key-sample">a̳̿</div>
+                    <div class="key-name">double overline</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">3</div>
+                    <div class="key-sample">ḁ̊</div>
+                    <div class="key-name">ring</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">4</div>
+                    <div class="key-sample">a͜͝</div>
+                    <div class="key-name">double breve</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">5</div>
+                    <div class="key-sample">a͈̎</div>
+                    <div class="key-name">double vertical</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">6</div>
+                    <div class="key-sample">a͓̽</div>
+                    <div class="key-name">x</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">7</div>
+                    <div class="key-sample">a̪͆</div>
+                    <div class="key-name">bridge</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">8</div>
+                    <div class="key-sample">ȃ̯</div>
+                    <div class="key-name">inverted breve</div>
+                </div>
+                <div class="key-item">
+                    <div class="key-digit">9</div>
+                    <div class="key-sample">ă̮</div>
+                    <div class="key-name">breve</div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- DECODE MODE -->
+        <div id="decodeMode" style="display: none;">
+            <div class="decode-grid" id="decodeGrid">
+                <div class="section decode-input">
+                    <div class="section-title">marked vessel</div>
+                    <label>paste the glitched carrier to call its buried voice back ⏾</label>
+                    <textarea id="zalgoInput" rows="4" class="zalgo-output main-box output-textarea" placeholder="☥ 𝗉𝐚𝗌𝗍𝐞 𝗍𝗁𝐞 𝗁𝐚𝐮𝗇𝗍𝐞𝖽 𝗍𝐞𝗑𝗍 𝗁𝐞𝗋𝐞... 𓂀"></textarea>
+                    <div class="button-row">
+                        <button onclick="decode()">decode</button>
+                        <button type="button" onclick="pasteDecode()">paste</button>
+                    </div>
+                </div>
+
+                <div class="section decode-links">
+                    <div class="section-title">links</div>
+                    <div class="links-body">
+                    <label>github repo</label>
+                    <a class="link" href="https://github.com/lilyofashwood/zalgo-cipher" target="_blank" rel="noopener">github.com/lilyofashwood/zalgo-cipher</a>
+                
+                    </div>
+</div>
+
+                <div class="section decode-output">
+                    <div class="section-title">unbound remains</div>
+                    <div class="mini-output">
+                        <div class="mini-header">
+                            <label>carrier skin (visible)</label>
+                            <button class="mini-btn" type="button" onclick="copyDecoded('decodedCarrierOutput', this)">copy</button>
+                        </div>
+                        <textarea id="decodedCarrierOutput" class="mini-text" readonly placeholder="—"></textarea>
+                    </div>
+                    <div class="mini-output">
+                        <div class="mini-header">
+                            <label>secret spell (recovered)</label>
+                            <button class="mini-btn" type="button" onclick="copyDecoded('decodedMessageOutput', this)">copy</button>
+                        </div>
+                        <textarea id="decodedMessageOutput" class="mini-text" readonly placeholder="—"></textarea>
+                    </div>
+                    <div class="mini-output">
+                        <div class="mini-header">
+                            <label>ascii bones</label>
+                            <button class="mini-btn" type="button" onclick="copyDecoded('decodedAsciiOutput', this)">copy</button>
+                        </div>
+                        <textarea id="decodedAsciiOutput" class="mini-text" readonly placeholder="—"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // Cipher key: digit -> [top, bottom]
+        const CIPHER = {
+            '0': ['\u030D', '\u0329'], // vertical line
+            '1': ['\u0357', '\u0339'], // right half ring
+            '2': ['\u033F', '\u0333'], // double overline
+            '3': ['\u030A', '\u0325'], // ring
+            '4': ['\u035D', '\u035C'], // double breve (wide parenthesis)
+            '5': ['\u030E', '\u0348'], // double vertical line
+            '6': ['\u033D', '\u0353'], // x
+            '7': ['\u0346', '\u032A'], // bridge
+            '8': ['\u0311', '\u032F'], // inverted breve
+            '9': ['\u0306', '\u032E']  // breve
+        };
+
+        // Alternate pairs for 0 and 1 to avoid adjacent repetition
+        // 0 has 2 pairs (primary + 1 alt), 1 has 3 pairs (primary + 2 alts)
+        const CIPHER_ALT = {
+            '0': [
+                ['\u0351', '\u031C']  // left half ring
+            ],
+            '1': [
+                ['\u0308', '\u0324'], // diaeresis
+                ['\u0303', '\u0330']  // tilde
+            ]
+        };
+
+        const overLAY_DIACRITICS = [
+            '\u20DD', // enclosing circle
+            '\u20DE', // enclosing square
+            '\u0489', // starburst
+            '\u20E4', // enclosing triangle
+            '\u0488', // cross
+            '\u0338', // diagonal /
+            '\u20E5', // diagonal \
+            '\u20D2', // vertical strike
+            '\u20EA', // leftwards arrow
+            '\u20EB'  // double solidus
+        ];
+
+        const overLAY_SET = new Set(overLAY_DIACRITICS);
+        const WORD_JOINER = '\u2060';
+        const COMBINING_GRAPHEME_JOINER = '\u034F';
+        const IGNORED_MARKS = new Set([
+            ...overLAY_DIACRITICS,
+            WORD_JOINER,
+            COMBINING_GRAPHEME_JOINER
+        ]);
+
+        // Reverse lookup: diacritic -> digit
+        const REVERSE_CIPHER = {};
+        for (const [digit, [top, bottom]] of Object.entries(CIPHER)) {
+            REVERSE_CIPHER[top] = digit;
+            REVERSE_CIPHER[bottom] = digit;
+        }
+        // Add alternates for 0 and 1
+        for (const [digit, alts] of Object.entries(CIPHER_ALT)) {
+            for (const [top, bottom] of alts) {
+                REVERSE_CIPHER[top] = digit;
+                REVERSE_CIPHER[bottom] = digit;
+            }
+        }
+
+        // All cipher diacritics for detection
+        const ALL_DIACRITICS = new Set([
+            ...Object.values(CIPHER).flat(),
+            ...Object.values(CIPHER_ALT).flat().flat(),
+            ...overLAY_DIACRITICS
+        ]);
+
+        let currentMode = 'encode';
+        let lastEncodedBase = '';
+        let outputStale = true;
+        let lastEncodedHidden = '';
+        let lastEncodedCarrier = '';
+
+        const STYLE_MAP = {
+            A: '𝐀',
+            B: '𝖡',
+            C: '𝖢',
+            D: '𝖣',
+            E: '𝐄',
+            F: '𝖥',
+            G: '𝖦',
+            H: '𝖧',
+            I: '𝐈',
+            J: '𝖩',
+            K: '𝖪',
+            L: '𝖫',
+            M: '𝖬',
+            N: '𝖭',
+            O: '𝐎',
+            P: '𝖯',
+            Q: '𝖰',
+            R: '𝖱',
+            S: '𝖲',
+            T: '𝖳',
+            U: '𝐔',
+            V: '𝖵',
+            W: '𝖶',
+            X: '𝖷',
+            Y: '𝖸',
+            Z: '𝖹',
+            a: '𝐚',
+            b: '𝖻',
+            c: '𝖼',
+            d: '𝖽',
+            e: '𝐞',
+            f: '𝖿',
+            g: '𝗀',
+            h: '𝗁',
+            i: '𝐢',
+            j: '𝗃',
+            k: '𝗄',
+            l: '𝗅',
+            m: '𝗆',
+            n: '𝗇',
+            o: '𝐨',
+            p: '𝗉',
+            q: '𝗊',
+            r: '𝗋',
+            s: '𝗌',
+            t: '𝗍',
+            u: '𝐮',
+            v: '𝗏',
+            w: '𝗐',
+            x: '𝗑',
+            y: '𝗒',
+            z: '𝗓',
+        };
+
+        function stylizeText(text) {
+            return String(text || '').replace(/[A-Za-z]/g, (ch) => STYLE_MAP[ch] || ch);
+        }
+
+        function stylizeUI() {
+            const selectors = [
+                '.section-title',
+                '.section-subtitle',
+                'label',
+                'button',
+                '.stat-label',
+                '.stat-value',
+                '.key-digit',
+                '.key-name',
+                '.title-suffix'
+            ];
+            document.querySelectorAll(selectors.join(',')).forEach((el) => {
+                if (!el || el.closest('.title-stack')) {
+                    return;
+                }
+                if (el.classList.contains('key-sample') || el.classList.contains('link') || el.tagName === 'A') {
+                    return;
+                }
+                if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') {
+                    return;
+                }
+                if (el.children.length > 0) {
+                    return;
+                }
+                el.textContent = stylizeText(el.textContent);
+            });
+
+            document.querySelectorAll('textarea[placeholder], input[placeholder]').forEach((el) => {
+                const placeholder = el.getAttribute('placeholder');
+                if (!placeholder) {
+                    return;
+                }
+                el.setAttribute('placeholder', stylizeText(placeholder));
+            });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function isOverlayEligible(char) {
+            return /[\p{L}\p{N}]/u.test(char);
+        }
+
+        function isCombining(char) {
+            return /\p{M}/u.test(char);
+        }
+
+        function splitClusters(text) {
+            const chars = [...text];
+            const clusters = [];
+            let current = '';
+            for (const char of chars) {
+                if (isCombining(char) && current) {
+                    current += char;
+                } else {
+                    if (current) {
+                        clusters.push(current);
+                    }
+                    current = char;
+                }
+            }
+            if (current) {
+                clusters.push(current);
+            }
+            return clusters;
+        }
+
+        function stripOverlays(text) {
+            return [...text].filter(char => !overLAY_SET.has(char) && char !== WORD_JOINER).join('');
+        }
+
+        function stripGeneratedMarks(text) {
+            const normalized = text.normalize('NFKD');
+            let cleaned = '';
+            for (const char of normalized) {
+                if (char === WORD_JOINER || /\p{M}/u.test(char)) {
+                    continue;
+                }
+                cleaned += char;
+            }
+            return cleaned.normalize('NFC');
+        }
+
+        function buildOverlayMap(eligibleIndices, ratio) {
+            const map = new Map();
+            if (!eligibleIndices.length) {
+                return map;
+            }
+
+            const clampedRatio = Math.max(0, Math.min(100, ratio));
+            const rawTarget = eligibleIndices.length * (clampedRatio / 100);
+            let target = Math.floor(rawTarget);
+            if (Math.random() < (rawTarget - target)) {
+                target += 1;
+            }
+
+            const count = Math.min(target, eligibleIndices.length);
+            if (count <= 0) {
+                return map;
+            }
+
+            const indices = [...eligibleIndices];
+            shuffleArray(indices);
+            const overlayIndices = indices.slice(0, count);
+
+            const overlays = [];
+            const pool = shuffleArray([...overLAY_DIACRITICS]);
+            for (let i = 0; i < count; i++) {
+                if (i < pool.length) {
+                    overlays.push(pool[i]);
+                } else {
+                    overlays.push(overLAY_DIACRITICS[Math.floor(Math.random() * overLAY_DIACRITICS.length)]);
+                }
+            }
+
+            for (let i = 0; i < count; i++) {
+                map.set(overlayIndices[i], overlays[i]);
+            }
+            return map;
+        }
+
+        function applyOverlaysToEncoded(encodedText, ratio) {
+            if (!encodedText) {
+                return '';
+            }
+
+            const stripped = stripOverlays(encodedText);
+            const clusters = splitClusters(stripped);
+            const eligible = [];
+            for (let i = 0; i < clusters.length; i++) {
+                const baseChar = [...clusters[i]][0];
+                if (baseChar && isOverlayEligible(baseChar)) {
+                    eligible.push(i);
+                }
+            }
+
+            const overlayMap = buildOverlayMap(eligible, ratio);
+            if (overlayMap.size === 0) {
+                return stripped;
+            }
+
+            return clusters.map((cluster, index) => {
+                const overlay = overlayMap.get(index);
+                if (!overlay) {
+                    return cluster;
+                }
+                const chars = [...cluster];
+                if (chars.length === 0) {
+                    return cluster;
+                }
+                const base = chars[0];
+                const rest = chars.slice(1).join('');
+                if (rest) {
+                    const spacer = rest.startsWith(COMBINING_GRAPHEME_JOINER) ? '' : COMBINING_GRAPHEME_JOINER;
+                    return base + overlay + spacer + rest;
+                }
+                return base + overlay;
+            }).join('');
+        }
+        function refreshTextAreaValue(targetId, value, { focus = false, blur = false } = {}) {
+            const target = document.getElementById(targetId);
+            if (!target) {
+                return;
+            }
+            const clone = target.cloneNode(false);
+            clone.value = value;
+            target.replaceWith(clone);
+            if (targetId === 'zalgoInput') {
+                bindDecodeInputHandlers(clone);
+            }
+            registerTextareaEvents(clone);
+            centerTextareaVertically(clone);
+            if (focus) {
+                requestAnimationFrame(() => {
+                    try {
+                        clone.focus({ preventScroll: true });
+                        clone.click();
+                        clone.setSelectionRange(0, 0);
+                    } catch (err) {
+                        // Ignore focus errors on readonly fields.
+                    }
+                });
+            }
+            if (blur) {
+                requestAnimationFrame(() => {
+                    try {
+                        clone.blur();
+                    } catch (err) {
+                        // Ignore blur errors.
+                    }
+                });
+            }
+        }
+
+        function bindDecodeInputHandlers(textarea) {
+            if (!textarea || textarea.dataset.decodeBind) {
+                return;
+            }
+            textarea.dataset.decodeBind = 'true';
+            textarea.addEventListener('paste', (event) => {
+                if (!event.clipboardData) {
+                    return;
+                }
+                event.preventDefault();
+                const text = event.clipboardData.getData('text');
+                refreshTextAreaValue('zalgoInput', text, { focus: false, blur: true });
+            });
+            textarea.addEventListener('input', () => {
+                refreshTextAreaValue('zalgoInput', textarea.value, { focus: false });
+            });
+        }
+
+        let textareaMirror = null;
+
+        function getTextareaMirror() {
+            if (textareaMirror) {
+                return textareaMirror;
+            }
+            textareaMirror = document.createElement('div');
+            textareaMirror.setAttribute('aria-hidden', 'true');
+            textareaMirror.style.position = 'absolute';
+            textareaMirror.style.top = '-9999px';
+            textareaMirror.style.left = '-9999px';
+            textareaMirror.style.visibility = 'hidden';
+            textareaMirror.style.whiteSpace = 'pre-wrap';
+            textareaMirror.style.wordBreak = 'break-word';
+            textareaMirror.style.overflowWrap = 'break-word';
+            textareaMirror.style.padding = '0';
+            document.body.appendChild(textareaMirror);
+            return textareaMirror;
+        }
+
+        function registerTextareaEvents(textarea) {
+            if (!textarea || textarea.classList.contains('output-textarea') || textarea.dataset.centerBind) {
+                return;
+            }
+            textarea.dataset.centerBind = 'true';
+            textarea.addEventListener('input', () => centerTextareaVertically(textarea));
+        }
+
+        function centerTextareaVertically(textarea) {
+            if (!textarea || textarea.classList.contains('output-textarea') || textarea.clientHeight === 0 || textarea.clientWidth === 0) {
+                return;
+            }
+            const style = getComputedStyle(textarea);
+            if (!textarea.dataset.basePadTop) {
+                textarea.dataset.basePadTop = parseFloat(style.paddingTop) || 0;
+                textarea.dataset.basePadBottom = parseFloat(style.paddingBottom) || 0;
+            }
+            const baseTop = parseFloat(textarea.dataset.basePadTop) || 0;
+            const baseBottom = parseFloat(textarea.dataset.basePadBottom) || 0;
+
+            const mirror = getTextareaMirror();
+            mirror.style.width = `${textarea.clientWidth}px`;
+            mirror.style.fontFamily = style.fontFamily;
+            mirror.style.fontSize = style.fontSize;
+            mirror.style.fontWeight = style.fontWeight;
+            mirror.style.fontStyle = style.fontStyle;
+            mirror.style.letterSpacing = style.letterSpacing;
+            mirror.style.lineHeight = style.lineHeight;
+            mirror.style.textTransform = style.textTransform;
+
+            mirror.textContent = textarea.value || textarea.placeholder || ' ';
+            const contentHeight = mirror.scrollHeight;
+            const available = textarea.clientHeight - contentHeight - baseTop - baseBottom;
+
+            if (available <= 0) {
+                textarea.style.paddingTop = `${baseTop}px`;
+                textarea.style.paddingBottom = `${baseBottom}px`;
+                return;
+            }
+
+            const extraTop = Math.floor(available / 2);
+            const extraBottom = Math.max(0, available - extraTop);
+            textarea.style.paddingTop = `${baseTop + extraTop}px`;
+            textarea.style.paddingBottom = `${baseBottom + extraBottom}px`;
+        }
+
+        function centerAllTextareas() {
+            document.querySelectorAll('textarea').forEach(textarea => {
+                registerTextareaEvents(textarea);
+                centerTextareaVertically(textarea);
+            });
+        }
+
+        function renderOutput(value, { focus = false } = {}) {
+            refreshTextAreaValue('zalgoOutput', value, { focus });
+        }
+
+        function applyOverlaysFromState(options = {}) {
+            const { focusOutput = false } = options;
+            const hiddenMessage = document.getElementById('hiddenMessage').value;
+            const carrierText = document.getElementById('carrierText').value;
+            if (outputStale || !lastEncodedBase || hiddenMessage !== lastEncodedHidden || carrierText !== lastEncodedCarrier) {
+                markOutputStale();
+                return;
+            }
+            const ratioInput = document.getElementById('overlayRatio');
+            const overlayRatio = ratioInput ? parseFloat(ratioInput.value) : 35;
+            const output = applyOverlaysToEncoded(lastEncodedBase, overlayRatio);
+            renderOutput(output, { focus: focusOutput });
+        }
+
+        function markOutputStale() {
+            lastEncodedBase = '';
+            lastEncodedHidden = '';
+            lastEncodedCarrier = '';
+            outputStale = true;
+            renderOutput('');
+            
+            
+        }
+
+        function updateOverlayRatioDisplay() {
+            const ratioInput = document.getElementById('overlayRatio');
+            const ratioValue = document.getElementById('overlayRatioValue');
+            if (!ratioInput || !ratioValue) {
+                return;
+            }
+            ratioValue.textContent = ratioInput.value;
+        }
+
+
+        function tryLiveEncode() {
+            if (currentMode !== 'encode') {
+                return;
+            }
+            applyOverlaysFromState();
+        }
+
+        function moveCipherKey(targetId) {
+            const keySection = document.getElementById('cipherKeySection');
+            const target = document.getElementById(targetId);
+            if (!keySection || !target) {
+                return;
+            }
+            if (targetId === 'decodeGrid') {
+                target.appendChild(keySection);
+                return;
+            }
+            if (keySection.parentElement !== target) {
+                target.appendChild(keySection);
+            }
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('encodeMode').style.display = mode === 'encode' ? 'block' : 'none';
+            document.getElementById('decodeMode').style.display = mode === 'decode' ? 'block' : 'none';
+            document.getElementById('encodeBtn').classList.toggle('active', mode === 'encode');
+            document.getElementById('decodeBtn').classList.toggle('active', mode === 'decode');
+            if (mode === 'encode') {
+                moveCipherKey('encodeGrid');
+            } else {
+                moveCipherKey('decodeGrid');
+            }
+            try {
+                localStorage.setItem('zalgoMode', mode);
+            } catch (err) {
+                // Ignore storage errors (private mode, etc.)
+            }
+            centerAllTextareas();
+        }
+
+        function textToAsciiString(text) {
+            return text.split('').map(c => c.charCodeAt(0).toString()).join('');
+        }
+
+        function asciiStringToText(asciiStr) {
+            let result = '';
+            let i = 0;
+            while (i < asciiStr.length) {
+                // Try 3 digits first (for values 100-127 typically)
+                if (i + 2 < asciiStr.length) {
+                    const three = parseInt(asciiStr.substring(i, i + 3));
+                    if (three >= 32 && three <= 126) {
+                        result += String.fromCharCode(three);
+                        i += 3;
+                        continue;
+                    }
+                }
+                // Try 2 digits (for values 32-99)
+                if (i + 1 < asciiStr.length) {
+                    const two = parseInt(asciiStr.substring(i, i + 2));
+                    if (two >= 32 && two <= 126) {
+                        result += String.fromCharCode(two);
+                        i += 2;
+                        continue;
+                    }
+                }
+                // Single digit - shouldn't happen for printable ASCII
+                i++;
+            }
+            return result;
+        }
+
+        function distributeDigits(digits, carrierLength) {
+            // Distribute digits across carrier letters, 6-12 per letter
+            // Adjacent letters must have different counts
+            const distribution = [];
+            let remaining = digits.length;
+            let lastCount = -1;
+            
+            for (let i = 0; i < carrierLength; i++) {
+                const lettersLeft = carrierLength - i;
+                const minNeeded = Math.max(6, Math.ceil(remaining / lettersLeft));
+                const maxAllowed = Math.min(12, remaining - (lettersLeft - 1) * 6);
+                
+                // Pick a random count that's different from last
+                let count;
+                let attempts = 0;
+                do {
+                    count = Math.floor(Math.random() * (maxAllowed - minNeeded + 1)) + minNeeded;
+                    attempts++;
+                } while (count === lastCount && attempts < 20 && minNeeded !== maxAllowed);
+                
+                distribution.push(count);
+                remaining -= count;
+                lastCount = count;
+            }
+            
+            return distribution;
+        }
+
+        function encode(options = {}) {
+            const { silent = false } = options;
+            const hiddenMessage = document.getElementById('hiddenMessage').value;
+            let carrierText = document.getElementById('carrierText').value;
+            let cleanedCarrier = stripGeneratedMarks(carrierText);
+            if (cleanedCarrier !== carrierText) {
+                document.getElementById('carrierText').value = cleanedCarrier;
+                carrierText = cleanedCarrier;
+                cleanedCarrier = carrierText;
+                updateStats();
+            }
+
+            markOutputStale();
+            
+            if (!hiddenMessage || !cleanedCarrier) {
+                if (!silent) {
+                    alert(stylizeText('the spell needs both a buried secret and a visible vessel'));
+                }
+                return;
+            }
+            
+            const asciiString = textToAsciiString(hiddenMessage);
+            const carrierChars = cleanedCarrier.split('');
+            
+            // Check capacity
+            const minCap = carrierChars.length * 6;
+            const maxCap = carrierChars.length * 12;
+            
+            if (asciiString.length < minCap || asciiString.length > maxCap) {
+                if (!silent) {
+                    alert(stylizeText(`the decimal spell length (${asciiString.length}) must fall between ${minCap} and ${maxCap} for this vessel.`));
+                }
+                return;
+            }
+            
+            // Distribute digits across carrier letters
+            const distribution = distributeDigits(asciiString.split(''), carrierChars.length);
+            
+            let result = '';
+            let digitIndex = 0;
+            
+            // Track last pair used for 0 and 1 to ensure no repeats
+            // 0 has 2 pairs total (primary + 1 alt), 1 has 3 pairs total (primary + 2 alts)
+            const numPairs = { '0': 2, '1': 3 };
+            let lastPairUsed = { '0': -1, '1': -1 };
+            
+            for (let i = 0; i < carrierChars.length; i++) {
+                const char = carrierChars[i];
+                const count = distribution[i];
+                const digits = asciiString.substring(digitIndex, digitIndex + count).split('');
+                digitIndex += count;
+                
+                // Build the character with diacritics
+                let encoded = char;
+                
+                // Randomly decide top/bottom split for this letter
+                // Ensure at least 1 on each side, but otherwise fully random
+                const minTop = 1;
+                const maxTop = count - 1;
+                const topTarget = Math.floor(Math.random() * (maxTop - minTop + 1)) + minTop;
+                
+                let topPlaced = 0;
+                let bottomPlaced = 0;
+                
+                for (let j = 0; j < digits.length; j++) {
+                    const digit = digits[j];
+                    
+                    // Decide top or bottom based on target
+                    let pos;
+                    if (topPlaced >= topTarget) {
+                        pos = 'bottom';
+                    } else if (bottomPlaced >= (count - topTarget)) {
+                        pos = 'top';
+                    } else {
+                        // Random choice weighted toward unfilled side
+                        pos = Math.random() < (topTarget - topPlaced) / (count - j) ? 'top' : 'bottom';
+                    }
+                    
+                    if (pos === 'top') {
+                        topPlaced++;
+                    } else {
+                        bottomPlaced++;
+                    }
+                    
+                    let pair;
+                    
+                    // For 0 and 1, randomly select a pair but never repeat the last one used
+                    if (digit === '0' || digit === '1') {
+                        // Build array of available pair indices (excluding last used)
+                        const available = [];
+                        for (let p = 0; p < numPairs[digit]; p++) {
+                            if (p !== lastPairUsed[digit]) {
+                                available.push(p);
+                            }
+                        }
+                        // Pick random from available
+                        const chosenPair = available[Math.floor(Math.random() * available.length)];
+                        lastPairUsed[digit] = chosenPair;
+                        
+                        // Select the pair: index 0 = primary (CIPHER), index 1+ = alternates
+                        if (chosenPair === 0) {
+                            pair = CIPHER[digit];
+                        } else {
+                            pair = CIPHER_ALT[digit][chosenPair - 1];
+                        }
+                    } else {
+                        pair = CIPHER[digit];
+                    }
+                    
+                    const mark = pair[pos === 'top' ? 0 : 1];
+                    encoded += COMBINING_GRAPHEME_JOINER + mark;
+                }
+
+                
+                result += encoded;
+            }
+            
+            lastEncodedBase = result;
+            lastEncodedHidden = hiddenMessage;
+            lastEncodedCarrier = carrierText;
+            outputStale = false;
+            applyOverlaysFromState({ focusOutput: true });
+        }
+
+        function decode() {
+            const zalgoText = document.getElementById('zalgoInput').value;
+            
+            if (!zalgoText) {
+                return;
+            }
+            
+            let carrier = '';
+            let asciiString = '';
+
+            for (const char of [...zalgoText]) {
+                if (IGNORED_MARKS.has(char)) {
+                    continue;
+                }
+                if (!ALL_DIACRITICS.has(char)) {
+                    carrier += char;
+                }
+                if (REVERSE_CIPHER[char] !== undefined) {
+                    asciiString += REVERSE_CIPHER[char];
+                }
+            }
+            
+            const decodedMessage = asciiStringToText(asciiString);
+            
+            const carrierOutput = document.getElementById('decodedCarrierOutput');
+            const messageOutput = document.getElementById('decodedMessageOutput');
+            const asciiOutput = document.getElementById('decodedAsciiOutput');
+
+            if (carrierOutput) {
+                carrierOutput.value = carrier;
+                centerTextareaVertically(carrierOutput);
+            }
+            if (messageOutput) {
+                messageOutput.value = decodedMessage;
+                centerTextareaVertically(messageOutput);
+            }
+            if (asciiOutput) {
+                asciiOutput.value = asciiString;
+                centerTextareaVertically(asciiOutput);
+            }
+        }
+        function pasteIntoField(targetId, afterPaste, options = {}) {
+            const { refresh = false } = options;
+            const target = document.getElementById(targetId);
+            if (!target) {
+                return;
+            }
+
+            const finalize = (value) => {
+                if (value === null || value === undefined) {
+                    return;
+                }
+                if (refresh || targetId === 'zalgoInput') {
+                    const shouldBlur = targetId === 'zalgoInput';
+                    refreshTextAreaValue(targetId, value, { focus: !shouldBlur, blur: shouldBlur });
+                } else {
+                    target.value = value;
+                    centerTextareaVertically(target);
+                    target.focus({ preventScroll: true });
+                }
+                if (typeof afterPaste === 'function') {
+                    afterPaste();
+                }
+            };
+
+            let execOk = false;
+            try {
+                target.focus({ preventScroll: true });
+                target.select();
+                execOk = document.execCommand && document.execCommand('paste');
+            } catch (err) {
+                execOk = false;
+            }
+            if (execOk) {
+                finalize(target.value);
+                return;
+            }
+
+            if (navigator.clipboard && navigator.clipboard.readText) {
+                navigator.clipboard.readText().then(text => {
+                    finalize(text);
+                }).catch(() => {
+                    // Clipboard read blocked by the browser.
+                });
+            }
+        }
+
+        function pasteDecode() {
+            pasteIntoField('zalgoInput', null, { refresh: true });
+        }
+
+        function pasteCarrier() {
+            pasteIntoField('carrierText', () => {
+                updateStats();
+                markOutputStale();
+            }, { refresh: false });
+        }
+
+        function copyOutput() {
+            const output = document.getElementById('zalgoOutput').value;
+            navigator.clipboard.writeText(output).then(() => {
+                // Brief feedback
+                const btn = event.target;
+                const original = btn.textContent;
+                btn.textContent = stylizeText('copied!');
+                setTimeout(() => btn.textContent = original, 1000);
+            });
+        }
+
+        function copyDecoded(id, button) {
+            const field = document.getElementById(id);
+            if (!field) {
+                return;
+            }
+            const value = field.value || '';
+            navigator.clipboard.writeText(value).then(() => {
+                if (!button) {
+                    return;
+                }
+                const original = button.textContent;
+                button.textContent = stylizeText('copied!');
+                setTimeout(() => button.textContent = original, 1000);
+            });
+        }
+
+        function updateStats() {
+            const hiddenMessage = document.getElementById('hiddenMessage').value;
+            const carrierText = document.getElementById('carrierText').value;
+            const cleanedCarrier = stripGeneratedMarks(carrierText);
+            updateOverlayRatioDisplay();
+            
+            const asciiString = textToAsciiString(hiddenMessage);
+            const carrierLength = cleanedCarrier.length;
+            
+            document.getElementById('asciiLength').textContent = asciiString.length;
+            document.getElementById('hiddenChars').textContent = hiddenMessage.length;
+            document.getElementById('carrierChars').textContent = carrierLength;
+            
+            const minCap = carrierLength * 6;
+            const maxCap = carrierLength * 12;
+            
+            document.getElementById('minCapacity').textContent = minCap;
+            document.getElementById('maxCapacity').textContent = maxCap;
+            
+            const statusEl = document.getElementById('capacityStatus');
+            const msgEl = document.getElementById('capacityMessage');
+            
+            if (carrierLength === 0) {
+                statusEl.textContent = '—';
+                statusEl.className = 'stat-value';
+                msgEl.innerHTML = '';
+            } else if (asciiString.length < minCap) {
+                const need = minCap - asciiString.length;
+                statusEl.textContent = stylizeText('short');
+                statusEl.className = 'stat-value warning';
+                msgEl.innerHTML = `<span class="error">${stylizeText(`need ${need} more ascii bones (longer secret or shorter vessel)`)}</span>`;
+            } else if (asciiString.length > maxCap) {
+                const over = asciiString.length - maxCap;
+                statusEl.textContent = stylizeText('over');
+                statusEl.className = 'stat-value warning';
+                msgEl.innerHTML = `<span class="error">${stylizeText(`${over} bones spill past capacity (shorter secret or longer vessel)`)}</span>`;
+            } else {
+                const ratio = (asciiString.length / carrierLength).toFixed(1);
+                statusEl.textContent = stylizeText('✓ ok');
+                statusEl.className = 'stat-value success';
+                msgEl.innerHTML = `<span class="info">${stylizeText(`~${ratio} marks per letter • room for ${maxCap - asciiString.length} more ascii bones`)}</span>`;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('hiddenMessage').addEventListener('input', () => {
+            updateStats();
+            markOutputStale();
+        });
+        document.getElementById('carrierText').addEventListener('input', () => {
+            updateStats();
+            markOutputStale();
+        });
+        const zalgoInputEl = document.getElementById('zalgoInput');
+        if (zalgoInputEl) {
+            bindDecodeInputHandlers(zalgoInputEl);
+        }
+        const overlayRatioInput = document.getElementById('overlayRatio');
+        if (overlayRatioInput) {
+            overlayRatioInput.addEventListener('input', () => {
+                updateStats();
+                    tryLiveEncode();
+            });
+        }
+
+        // Initial update
+        updateStats();
+        stylizeUI();
+        try {
+            const savedMode = localStorage.getItem('zalgoMode');
+            if (savedMode === 'decode' || savedMode === 'encode') {
+                setMode(savedMode);
+            } else {
+                setMode('encode');
+            }
+        } catch (err) {
+            setMode('encode');
+        }
+        centerAllTextareas();
+        window.addEventListener('resize', centerAllTextareas);
+        window.addEventListener('load', centerAllTextareas);
+    </script>
+</body>
+</html>
