@@ -75,3 +75,8 @@ The Coral Asemic token dictionary has not been recovered; its choice explicitly 
 Run `python3 tests/run.py` with Google Chrome, or set `CHROME_BIN` to another compatible executable. Tests use an isolated profile and local HTTP server. The suite verifies all 78 carriers, exact Unicode and escape recovery, removal/corruption isolation, malformed frames, canonical/compatibility normalization behavior, a modeled 20-code-point cap, and real-browser v1/v2 round trips.
 
 The historical `transport-boundaries.test.mjs` expected unpublished source patterns absent from both shipped pages. Those assertions have not been represented as passing. The new regression tests verify the newly specified MUX behavior; legacy source is preserved.
+# Evening evidence update · 2026-09-10
+
+The later supplied Kasaneuta recovery README reports that the original Aureole-MUX exchange and Halo-8, Root-8, Ghost-5 and Orbital-3 tables were recovered elsewhere, with Loop·Weave, Orbital·Wrap, Covert·Drift and Time-Division MUX variants. It does **not** include the actual four tables or its referenced `AUREOLE_MUX_EXACT_RECOVERY.md`/raw UI capture in this checkout. The gap is now “referenced recovery packet not supplied,” not “no recovery reported anywhere.”
+
+Do not infer those tables from their sizes or relabel the independently specified MUX3 format below as the historical Aureole-MUX. The source-reported table/variant naming and attribution can be reconciled when the full packet arrives. The exact supplied report is preserved privately in the workspace-context evening intake.
