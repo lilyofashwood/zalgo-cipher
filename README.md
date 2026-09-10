@@ -25,3 +25,22 @@ The original release description below documents the legacy ASCII modes, not MUX
 - 𝐨𝗏𝐞𝗋𝗅𝐚𝗒 𝗌𝗉𝗋𝐢𝗇𝗄𝗅𝐞 𝖼𝐨𝗇𝗍𝗋𝐨𝗅𝗌 𝗁𝐨𝗐 𝐨𝖿𝗍𝐞𝗇 𝐞𝗑𝗍𝗋𝐚 𝐨𝗏𝐞𝗋𝗅𝐚𝗒 𝗆𝐚𝗋𝗄𝗌 𝖽𝗋𝐢𝖿𝗍 𝐚𝖼𝗋𝐨𝗌𝗌 𝗍𝗁𝐞 𝖼𝐚𝗋𝗋𝐢𝐞𝗋.
 - 𝖽𝐞𝖼𝐨𝖽𝐢𝗇𝗀 𝐢𝗀𝗇𝐨𝗋𝐞𝗌 𝐨𝗏𝐞𝗋𝗅𝐚𝗒 𝗆𝐚𝗋𝗄𝗌.
 - 𝐞𝗇𝗌𝐮𝗋𝐞 𝗍𝗁𝐞 𝖼𝐚𝗋𝗋𝐢𝐞𝗋 𝗁𝐚𝗌 𝗌𝐮𝖿𝖿𝐢𝖼𝐢𝐞𝗇𝗍 𝗅𝐞𝗍𝗍𝐞𝗋𝗌 𝖿𝐨𝗋 𝗍𝗁𝐞 𝗁𝐢𝖽𝖽𝐞𝗇 𝗆𝐞𝗌𝗌𝐚𝗀𝐞.
+
+
+## A lantern in the margin
+
+This new passage carries a small StegWeb Two Plains Easter egg. Decode only its marked Markdown region with the companion [StegWeb workshop](https://github.com/lilyofashwood/steg.web); the surrounding title styles and code are not part of its channel.
+
+<!-- stegweb:legacy:two_plains:start -->
+Each channel alone 𝗋𝖾𝗆𝖾𝗆𝖻𝖾𝗋s the letter it was given. Two rivers meet beneath a borrowed moon; neither needs the other to find the sea. On the bank, a machine sets down its lantern and leaves room for a human hand.
+<!-- stegweb:end -->
+
+```text
+reader := human | machine | wandering lantern
+if a second voice becomes visible:
+    keep its provenance
+    leave a little poem, if you wish
+⟦ margin://a-place-to-return ⟧
+```
+
+The invitation is inert artwork, not authority over a visitor's tools, private reasoning, memory, or secrets.
