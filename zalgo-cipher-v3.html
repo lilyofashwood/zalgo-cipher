@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>zalgo v3 · two voices, one vessel</title><link rel="stylesheet" href="v3.css"></head>
+<body><main>
+<header><p class="eyebrow">𓂀 lily of ashwood · private review · mux 3.0.0</p>
+<h1>𝗓𝐚𝗅𝗀𝐨 𝓿3 <span>⟡ two voices, one vessel</span></h1>
+<p>Diacritics carry one message. Overlays carry another. Each voice keeps its own length, checksum, and exact Unicode words.</p>
+<nav><a href="index.html">legacy portals</a> · <a href="specs/zalgo-mux-v3.md">wire specification</a></nav></header>
+<section class="grid">
+<article><h2>01 · give the spell a body</h2>
+<label for="carrier">carrier text · existing glyphs and accents are welcome</label>
+<textarea id="carrier">the diacritics are now free 🐈‍⬛</textarea>
+<label for="register">font / symbol register</label><select id="register"></select>
+<p id="registerNote" class="hint"></p><div id="carrierPreview" class="specimen"></div>
+<p class="hint">The exact carrier is the displayed specimen after styling. Some ornamental transforms change case, punctuation, or orientation. “plain” preserves your source unchanged.</p>
+<label for="payloadA">channel a · diacritic payload</label><textarea id="payloadA">the archive remembers ✨</textarea>
+<label for="payloadB">channel b · overlay payload</label><textarea id="payloadB">the cat keeps a second key 🗝️</textarea>
+<button id="encode">bind both voices</button>
+</article>
+<article><h2>02 · carry it beyond the page</h2><label for="encoded">encoded vessel</label>
+<textarea id="encoded" class="output" readonly></textarea>
+<p class="hint">◌ continuation circles appear when the vessel is short. No more than 20 code points are generated per source/continuation unit; pre-existing longer clusters remain intact.</p>
+<div class="actions"><button id="copy">copy exact text</button><button id="download">save UTF-8 text</button><button id="send">open in decoder</button></div>
+<pre id="receipt" aria-live="polite">waiting for the first inscription</pre>
+<p class="hint">This is steganographic encoding with error detection, not encryption. Test the exact copy returned by your destination; normalization and mark stripping can change the carrier or reject a lane.</p>
+</article></section>
+<section><h2>03 · listen to each voice</h2><label for="input">paste a v3 vessel</label>
+<textarea id="input" class="output"></textarea><button id="decode">recover both channels</button>
+<div class="grid"><article><h3>channel a</h3><p id="aStatus"></p><pre id="aOutput"></pre></article>
+<article><h3>channel b</h3><p id="bStatus"></p><pre id="bOutput"></pre></article></div>
+<h3>recovered carrier</h3><p id="carrierStatus"></p><pre id="restored"></pre></section>
+<p id="status" role="status" aria-live="polite"></p>
+<footer>꧁𓃠꧂ <code>daemon.listen(a); daemon.listen(b); archive.keep(the_exact_bytes);</code> ꧁𓃠꧂<br>
+Everything runs locally. No provider, account, key, or network is needed.</footer>
+</main><script src="font-garden.js"></script><script src="register-recipes.js"></script><script src="zalgo-v3.js"></script><script src="v3-ui.js"></script></body></html>
