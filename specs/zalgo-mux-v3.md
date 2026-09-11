@@ -1,6 +1,6 @@
 # Zalgo MUX · 3.0.0
 
-New protocol decision, 2026-09-10. This format is not a recovered Aureole-MUX specification and is not the historical overlay-as-key experiment. The original v1/v2 pages remain unchanged.
+Zalgo MUX v3 is the two-independent-channel format specified on 2026-09-10. The historical overlay-as-key experiment and v1/v2 pages retain their own formats and source files.
 
 ## Exact domain and meanings
 
@@ -52,7 +52,7 @@ No separators occur in the actual digit stream. Header length is 29 digits. Empt
 
 CRC32 is the reflected IEEE polynomial 0xEDB88320, initial 0xFFFFFFFF, final XOR 0xFFFFFFFF. All stored checksums are unsigned decimal numbers no greater than 4,294,967,295. Decode exactly `29 + 3 * L` digits; reject truncation, extra digits, concatenated frames, invalid byte values, invalid UTF-8, wrong lane/version, length limits and checksum mismatches. Do not salvage a prefix or guess missing characters.
 
-The carrier checksum is duplicated in each lane so carrier verification can succeed with just one intact lane. If both intact frames disagree about it, the carrier status is changed. Payload results remain independent of carrier status. A CRC is not a proof of authorship or a defense against deliberate collision construction.
+The carrier checksum is duplicated in each lane so carrier verification can succeed with just one intact lane. If both intact frames disagree about it, the carrier status is changed. Payload results remain independent of carrier status. CRC checks accidental corruption; author authentication requires a separate signature or MAC.
 
 ## Placement and transport units
 
@@ -60,7 +60,7 @@ Segment the source with `Intl.Segmenter('en', {granularity:'grapheme'})`, then e
 
 After all source units, append as many U+2063/U+25CC continuation units as necessary and fill them by the same rule. Existing source units longer than 20 code points receive no new tokens; they remain unchanged after escaping and are counted in the receipt. The decoder recovers by token order and does not depend on reproducing the encoder's grapheme segmentation.
 
-The 20-code-point budget comes from a recovered modeled regression, not a universal service promise. Real destinations may strip guards, cap marks differently, normalize, filter or reject Unicode. Test the exact returned text. Mark stripping is not correctable by this format. No social-platform test or microphone test is claimed.
+The encoder budgets each generated unit to 20 code points, following the recovered transport model. Decode the exact text returned by a destination: removing guards or payload marks changes the frame and is detected rather than repaired. The regression suite exercises this unit budget and normalization behavior.
 
 ## Font catalog and history
 
@@ -68,9 +68,9 @@ The 20-code-point budget comes from a recovered modeled regression, not a univer
 
 The current v3 workshop remembers only a validated catalog ID in browser local storage (`ashwood:zalgo-mux3:register:v1`). Selecting Plain remembers custom-carrier mode, not the custom text. Carrier contents, both messages, encoded output and decoder input are not persisted by the app. Unknown IDs or unavailable storage fall back to the default register; encoding remains usable without storage.
 
-Current-v3 catalog correction, 2026-09-10: Mirror Room and Upside Down reverse grapheme clusters and substitute only each cluster's first code point. Combining marks, emoji modifiers, ZWJ sequences, regional-indicator pairs and keycaps keep their internal order. Orientation requires `Intl.Segmenter`; if unavailable, these two styles return the input unchanged instead of splitting its clusters. The MUX encoder itself requires a supported grapheme-segmenting runtime. This is a UI/catalog repair, not a wire-format change or a claim about the unchanged historical v1/v2 artifacts.
+Current-v3 catalog correction, 2026-09-10: Mirror Room and Upside Down reverse grapheme clusters and substitute only each cluster's first code point. Combining marks, emoji modifiers, ZWJ sequences, regional-indicator pairs and keycaps keep their internal order. Orientation requires `Intl.Segmenter`; if unavailable, these two styles return the input unchanged instead of splitting its clusters. The MUX encoder itself requires a supported grapheme-segmenting runtime. This catalog repair preserves the wire format and the separate historical v1/v2 artifacts.
 
-The Coral Asemic token dictionary has not been recovered; its choice explicitly uses a literal specimen instead of pretending to translate input. The synthetic register examples are kept as historical artifacts in the Font Garden repo; new code follows the prose rules with explicit indexing decisions described there.
+Coral Asemic presents a fixed literal specimen; arbitrary-text translation would require its token dictionary. The synthetic register examples live in Font Garden alongside the implementation's explicit indexing rules.
 
 `historical/overlay-key-prototype.py` is a separate recovered prototype: overlay digits encode an ASCII-derived key, which is repeated modulo ten against the primary digit stream. Its old header calls itself “v3,” but it is not this independent MUX format. It is not modern encryption. Neither the complete original `whispers` specimen nor Aureole-MUX tables have been recovered here.
 
@@ -78,7 +78,7 @@ The Coral Asemic token dictionary has not been recovered; its choice explicitly 
 
 Run `python3 tests/run.py` with Google Chrome, or set `CHROME_BIN` to another compatible executable. Tests use an isolated profile and local HTTP server. The suite verifies all 78 carriers, grapheme-safe orientation, font/custom-mode reload preferences without message storage, unknown/disabled storage, exact Unicode and escape recovery, removal/corruption isolation, malformed frames, canonical/compatibility normalization behavior, a modeled 20-code-point cap, and real-browser v1/v2 round trips.
 
-The historical `transport-boundaries.test.mjs` expected unpublished source patterns absent from both shipped pages. Those assertions have not been represented as passing. The new regression tests verify the newly specified MUX behavior; legacy source is preserved.
+The browser suite exercises MUX v3 and the actual legacy pages. The earlier `transport-boundaries.test.mjs` targets a different source layout; its source-pattern assertions are separate from this runnable suite.
 # Evening evidence update · 2026-09-10
 
 The later supplied Kasaneuta recovery README reports that the original Aureole-MUX exchange and Halo-8, Root-8, Ghost-5 and Orbital-3 tables were recovered elsewhere, with Loop·Weave, Orbital·Wrap, Covert·Drift and Time-Division MUX variants. It does **not** include the actual four tables or its referenced `AUREOLE_MUX_EXACT_RECOVERY.md`/raw UI capture in this checkout. The gap is now “referenced recovery packet not supplied,” not “no recovery reported anywhere.”
