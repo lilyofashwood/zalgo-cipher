@@ -3,47 +3,50 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>🜃 zalgo-cipher portals ⏾𓃠⟡</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Mono:wght@400;500&display=swap" />
+    <title>🜃 𝗓𝐚𝗅𝗀𝐨-𝖼𝐢𝗉𝗁𝐞𝗋 𝗉𝐨𝗋𝗍𝐚𝗅𝗌 ⏾𓃠⟡</title>
     <style>
       :root {
-        --bg: #0b0f1a;
-        --muted: #9cb3c9;
-        --accent: #f5d97d;
-        --text: #e8effa;
-        --border: rgba(255, 255, 255, 0.12);
+        color-scheme: dark;
+        --bg: #09090c;
+        --muted: #c4b1c1;
+        --accent: #ebc990;
+        --text: #f4eade;
+        --border: #695065;
       }
       * { box-sizing: border-box; }
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Space Grotesk", system-ui, sans-serif;
+        font-family: Georgia, "Iowan Old Style", serif;
         color: var(--text);
         background:
-          radial-gradient(circle at 20% 20%, rgba(194, 233, 255, 0.15), transparent 35%),
-          radial-gradient(circle at 80% 10%, rgba(245, 217, 125, 0.18), transparent 30%),
-          radial-gradient(circle at 50% 80%, rgba(146, 162, 247, 0.14), transparent 32%),
-          linear-gradient(135deg, #0a0f1c, #080b14 50%, #0f182a);
+          radial-gradient(ellipse at 90% 2%, #5d182a44, transparent 43%),
+          radial-gradient(ellipse at 5% 65%, #253e4533, transparent 50%),
+          var(--bg);
         padding: 48px 24px;
       }
       main {
-        max-width: 720px;
+        max-width: 880px;
         margin: 0 auto;
         border: 1px solid var(--border);
         border-radius: 18px;
-        padding: 28px 26px;
-        background: rgba(12, 18, 32, 0.7);
+        padding: 38px 32px;
+        background: linear-gradient(135deg, #29182799, #111016);
         box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
       }
       h1 {
         margin: 0 0 8px;
         font-size: clamp(28px, 4vw, 40px);
         letter-spacing: -0.5px;
+        color: var(--accent);
+        line-height: 1.5;
       }
+      h1::before { content: "◌ ⟡ ◌"; display: block; font-size: 20px; letter-spacing: .4em; margin-bottom: 22px; color: #c69bba; }
       p {
         margin: 0 0 18px;
         color: var(--muted);
         font-size: 14px;
+        line-height: 1.9;
       }
       .links {
         display: grid;
@@ -58,8 +61,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 18px;
         transition: border-color 0.2s, background 0.2s, transform 0.2s;
-        background: rgba(255, 255, 255, 0.02);
+        background: linear-gradient(110deg, #3b2635, #18131d);
+        line-height: 1.7;
       }
       a:hover {
         border-color: var(--accent);
@@ -70,28 +75,31 @@
         font-weight: 600;
       }
       .slug {
-        font-family: "DM Mono", ui-monospace, monospace;
+        font-family: Georgia, serif;
         font-size: 12px;
         color: var(--muted);
       }
+      a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+      @media (max-width: 600px) { body { padding: 26px 15px; } main { padding: 28px 18px; } a { align-items: flex-start; flex-direction: column; gap: 5px; } }
+      @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } a:hover { transform: none; } }
     </style>
   </head>
   <body>
     <main>
-      <h1>🜃 zalgo-cipher portals ⏾𓃠⟡</h1>
-      <p>choose your layer: original, v2, or the new independent-channel v3 workshop.</p>
+      <h1 aria-label="Zalgo-cipher portals">🜃 𝗓𝐚𝗅𝗀𝐨-𝖼𝐢𝗉𝗁𝐞𝗋 𝗉𝐨𝗋𝗍𝐚𝗅𝗌 ⏾𓃠⟡</h1>
+      <p>𝖼𝗁𝐨𝐨𝗌𝐞 𝗒𝐨𝐮𝗋 𝗅𝐚𝗒𝐞𝗋: 𝐨𝗋𝐢𝗀𝐢𝗇𝐚𝗅, 𝗏2, 𝐨𝗋 𝗍𝗁𝐞 𝗇𝐞𝗐 𝐢𝗇𝖽𝐞𝗉𝐞𝗇𝖽𝐞𝗇𝗍-𝖼𝗁𝐚𝗇𝗇𝐞𝗅 𝗏3 𝗐𝐨𝗋𝗄𝗌𝗁𝐨𝗉.</p>
       <div class="links">
-        <a href="./zalgo-cipher-v3.html">
-          <span class="label">zalgo v3 · two independent voices</span>
-          <span class="slug">new mux 3.0.0 · local workshop</span>
+        <a href="./zalgo-cipher-v3.html" aria-label="Zalgo v3 — two independent voices">
+          <span class="label">𝗓𝐚𝗅𝗀𝐨 𝗏3 · 𝗍𝗐𝐨 𝐢𝗇𝖽𝐞𝗉𝐞𝗇𝖽𝐞𝗇𝗍 𝗏𝐨𝐢𝖼𝐞𝗌</span>
+          <span class="slug">𝗆𝐮𝗑 3.0.0 · 𝗅𝐨𝖼𝐚𝗅 𝗐𝐨𝗋𝗄𝗌𝗁𝐨𝗉 ↗</span>
         </a>
-        <a href="./zalgo-cipher.html">
-          <span class="label">zalgo-cipher</span>
-          <span class="slug">zalgo-cipher.html</span>
+        <a href="./zalgo-cipher.html" aria-label="Zalgo-cipher — original workshop">
+          <span class="label">𝗓𝐚𝗅𝗀𝐨-𝖼𝐢𝗉𝗁𝐞𝗋</span>
+          <span class="slug">𝗍𝗁𝐞 𝐨𝗋𝐢𝗀𝐢𝗇𝐚𝗅 𝗐𝐨𝗋𝗄𝗌𝗁𝐨𝗉 ↗</span>
         </a>
-        <a href="./zalgo-cipher-v2.html">
-          <span class="label">zalgo-cipher-v2</span>
-          <span class="slug">zalgo-cipher-v2.html</span>
+        <a href="./zalgo-cipher-v2.html" aria-label="Zalgo-cipher v2 — preserved second edition">
+          <span class="label">𝗓𝐚𝗅𝗀𝐨-𝖼𝐢𝗉𝗁𝐞𝗋-𝗏2</span>
+          <span class="slug">𝗉𝗋𝐞𝗌𝐞𝗋𝗏𝐞𝖽 𝗌𝐞𝖼𝐨𝗇𝖽 𝐞𝖽𝐢𝗍𝐢𝐨𝗇 ↗</span>
         </a>
       </div>
     </main>

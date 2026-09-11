@@ -120,6 +120,69 @@
     await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('legacy page timeout')),10000);iframe.onload=()=>{clearTimeout(timer);resolve();};document.body.append(iframe);});
     try{const w=iframe.contentWindow;w.document.getElementById('hiddenMessage').value='lily';w.document.getElementById('carrierText').value='hi';w.document.getElementById('overlayRatio').value='0';w.encode({silent:true});w.document.getElementById('zalgoInput').value=w.document.getElementById('zalgoOutput').value;w.decode();equal(w.document.getElementById('decodedMessageOutput').value,'lily');}finally{iframe.remove();}
   });
+  await test('authored interface prose is lettered, with literal receipts and both payloads untouched',async()=>{
+    const iframe=await workshop();
+    try{const w=iframe.contentWindow,d=w.document;
+      const leaks=()=>{const walker=d.createTreeWalker(d.querySelector('main'),w.NodeFilter.SHOW_TEXT);let n;const found=[];while(n=walker.nextNode()){if(/[A-Za-z]/.test(n.textContent)&&!n.parentElement.closest('script,style,textarea,input,code,[data-literal],#carrierPreview,.ui-plain'))found.push(n.textContent);}return found;};
+      equal(leaks().length,0);assert(!/[A-Za-z]/.test(d.title));
+      for(const option of d.querySelectorAll('option')){assert(!/[A-Za-z]/.test(option.textContent));assert(option.getAttribute('aria-label'));}
+      const exact='ASCII remains exact e\u0301 🐈‍⬛';d.getElementById('payloadA').value=exact;d.getElementById('payloadA').dispatchEvent(new w.Event('input'));
+      assert(!/[A-Za-z]/.test(d.getElementById('receipt').textContent));equal(d.getElementById('receipt').getAttribute('aria-label'),'payload changed · bind both voices again');
+      d.getElementById('send').click();assert(!/[A-Za-z]/.test(d.getElementById('status').textContent));equal(d.getElementById('status').getAttribute('aria-label'),'Bind both voices first.');
+      d.getElementById('encode').click();assert(JSON.parse(d.getElementById('receipt').textContent));equal(d.getElementById('receipt').getAttribute('aria-label'),null);
+      d.getElementById('send').click();equal(d.getElementById('aOutput').textContent,exact);equal(d.getElementById('bOutput').textContent,'the cat keeps a second key 🗝️');assert(!/[A-Za-z]/.test(d.getElementById('aStatus').textContent));equal(d.getElementById('aStatus').getAttribute('aria-label'),'exact');equal(leaks().length,0);
+    }finally{iframe.remove();}
+  });
+  await test('catalog deep links select only known registers and never import query payloads or keys',async()=>{
+    const saved=localStorage.getItem(preferenceKey);localStorage.setItem(preferenceKey,'wing');
+    try{for(const selected of ['plain','chaos-noodle-ii','mirror','coral-asemic-specimen','unknown','__proto__']){
+      const iframe=document.createElement('iframe');iframe.hidden=true;
+      iframe.src='../zalgo-cipher-v3.html?register='+encodeURIComponent(selected)+'&payloadA=not-imported&key=not-imported';
+      await frameLoad(iframe,()=>document.body.append(iframe));
+      try{const d=iframe.contentWindow.document,expected=FontGarden.list().some(style=>style.id===selected)?selected:'wing';
+        equal(d.getElementById('register').value,expected);equal(localStorage.getItem(preferenceKey),'wing');
+        equal(d.getElementById('payloadA').value,'the archive remembers ✨');
+        const result=M.decode(d.getElementById('encoded').value);equal(result.a.payload,'the archive remembers ✨');equal(result.b.payload,'the cat keeps a second key 🗝️');
+        equal(result.carrier.value,FontGarden.apply(expected,d.getElementById('carrier').value));
+      }finally{iframe.remove();}
+    }}finally{if(saved===null)localStorage.removeItem(preferenceKey);else localStorage.setItem(preferenceKey,saved);}
+  });
+  await test('invalid replacement source clears old packet, preview and success receipt',async()=>{
+    const iframe=await workshop();
+    try{const w=iframe.contentWindow,d=w.document,carrier=d.getElementById('carrier');
+      assert(JSON.parse(d.getElementById('receipt').textContent));
+      carrier.value='x'.repeat(M.LIMITS.carrier+1);carrier.dispatchEvent(new w.Event('input'));
+      equal(d.getElementById('encoded').value,'');equal(d.getElementById('carrierPreview').textContent,'');
+      assert(!d.getElementById('receipt').hasAttribute('data-literal'));assert(!/[A-Za-z]/.test(d.getElementById('receipt').textContent));
+      assert(d.getElementById('status').getAttribute('aria-label').startsWith('Carrier exceeds'));
+      carrier.value='e\u0301 猫';carrier.dispatchEvent(new w.Event('input'));equal(d.getElementById('status').textContent,'');
+      d.getElementById('encode').click();assert(JSON.parse(d.getElementById('receipt').textContent));
+      d.getElementById('payloadA').value='\uD800';d.getElementById('encode').click();
+      equal(d.getElementById('encoded').value,'');assert(!d.getElementById('receipt').hasAttribute('data-literal'));
+      assert(!/[A-Za-z]/.test(d.getElementById('status').textContent));
+    }finally{iframe.remove();}
+  });
+  await test('portal prose is fully lettered and every unchanged destination is reachable',async()=>{
+    const iframe=document.createElement('iframe');iframe.hidden=true;iframe.src='../index.html';
+    await frameLoad(iframe,()=>document.body.append(iframe));
+    try{const d=iframe.contentWindow.document;assert(!/[A-Za-z]/.test(d.title));assert(!/[A-Za-z]/.test(d.querySelector('main').textContent));
+      const links=[...d.querySelectorAll('a')];equal(links.length,3);assert(links.every(link=>link.getAttribute('aria-label')));
+      equal(links.map(link=>link.getAttribute('href')).join('|'),'./zalgo-cipher-v3.html|./zalgo-cipher.html|./zalgo-cipher-v2.html');
+      assert(!d.querySelector('link[href^="https:"]'));
+    }finally{iframe.remove();}
+  });
+  for(const file of ['zalgo-cipher.html','zalgo-cipher-v2.html'])await test(file+' title lettering leaves literal historic mark stack unchanged',async()=>{
+    const source=await (await fetch('../'+file)).text(),parsed=new DOMParser().parseFromString(source,'text/html');
+    const iframe=document.createElement('iframe');iframe.hidden=true;iframe.src='../'+file;
+    await frameLoad(iframe,()=>document.body.append(iframe));
+    try{const d=iframe.contentWindow.document;assert(!/[A-Za-z]/.test(d.querySelector('.title-base').textContent));
+      equal(d.querySelector('.title-base').textContent,'𝗓𝐚𝓁𝗀𝐨');
+      equal(d.querySelector('.title-zalgo').textContent,parsed.querySelector('.title-zalgo').textContent);
+      equal(d.querySelector('.title-stack').getAttribute('data-glow'),parsed.querySelector('.title-stack').getAttribute('data-glow'));
+      equal(d.title,parsed.title.replace('-cipher','-𝖼𝐢𝗉𝗁𝐞𝗋'));
+      assert(!/[A-Za-z]/.test(d.querySelector('.title-suffix').textContent));
+    }finally{iframe.remove();}
+  });
   const report=results.join('\n')+'\n'+results.filter(x=>x.startsWith('PASS')).length+'/'+results.length+' passed';
   document.getElementById('results').textContent=report;
   document.title='ZALGO_TESTS:'+(results.some(x=>x.startsWith('FAIL'))?'fail':'pass')+':'+encodeURIComponent(report);

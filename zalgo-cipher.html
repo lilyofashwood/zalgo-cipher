@@ -800,6 +800,10 @@
         }
 
         function stylizeUI() {
+            // Dress the foreground label and tab suffix only; the historical mark stack is literal art.
+            const titleBase = document.querySelector('.title-base');
+            if (titleBase) titleBase.textContent = stylizeText(titleBase.textContent);
+            document.title = document.title.replace(/-cipher/g, stylizeText('-cipher'));
             const selectors = [
                 '.section-title',
                 '.section-subtitle',
