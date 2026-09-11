@@ -51,6 +51,70 @@
     for(const style of styles){const c=FontGarden.apply(style.id,'Nova keeps Every font. 🐈‍⬛ e\u0301 1️⃣');const r=M.decode(make(c,'A ✧','B 🌙'));equal(r.a.payload,'A ✧');equal(r.b.payload,'B 🌙');equal(r.carrier.value,c);equal(r.carrier.status,'exact');}
   });
   await test('house style uses actual serif-bold vowels and sans consonants',()=>equal(FontGarden.apply('chaos-noodle-ii','Ashwood'),'𝐀𝗌𝗁𝗐𝐨𝐨𝖽'));
+  await test('mirror and upside preserve combining, ZWJ, flag and keycap clusters',()=>{
+    const source='A e\u0301 👩🏽‍💻 🇯🇵 1️⃣ क्ष 가';
+    for(const [style,expected] of [['mirror','가 क्ष 1️⃣ 🇯🇵 👩🏽‍💻 ɘ\u0301 ɒ'],['upside','가 क्ष 1️⃣ 🇯🇵 👩🏽‍💻 ǝ\u0301 ∀']]){
+      const carrier=FontGarden.apply(style,source);equal(carrier,expected);
+      equal(M.graphemes(carrier).length,M.graphemes(source).length);
+      const result=M.decode(make(carrier,'orientation A ✨','orientation B 🐈‍⬛'));
+      equal(result.a.payload,'orientation A ✨');equal(result.b.payload,'orientation B 🐈‍⬛');equal(result.carrier.value,expected);equal(result.carrier.status,'exact');
+    }
+  });
+  const preferenceKey='ashwood:zalgo-mux3:register:v1';
+  await test('orientation leaves input intact if grapheme segmentation is unavailable',()=>{
+    const descriptor=Object.getOwnPropertyDescriptor(Intl,'Segmenter'),source='A e\u0301 👩🏽‍💻 🇯🇵 1️⃣';
+    try{Object.defineProperty(Intl,'Segmenter',{configurable:true,value:undefined});for(const style of ['mirror','upside'])equal(FontGarden.apply(style,source),source);}
+    finally{Object.defineProperty(Intl,'Segmenter',descriptor);}
+  });
+  const frameLoad=(iframe,navigate)=>new Promise((resolve,reject)=>{
+    const timer=setTimeout(()=>reject(new Error('workshop page timeout')),10000);
+    iframe.onload=()=>{clearTimeout(timer);resolve();};navigate();
+  });
+  async function workshop(srcdoc){
+    const iframe=document.createElement('iframe');iframe.hidden=true;
+    if(srcdoc===undefined)iframe.src='../zalgo-cipher-v3.html';else iframe.srcdoc=srcdoc;
+    try{await frameLoad(iframe,()=>document.body.append(iframe));return iframe;}catch(error){iframe.remove();throw error;}
+  }
+  await test('reload remembers font and plain custom mode, never carrier or either message',async()=>{
+    const saved=localStorage.getItem(preferenceKey);localStorage.removeItem(preferenceKey);
+    const storageBefore=JSON.stringify(Object.entries(localStorage).sort()),sessionBefore=JSON.stringify(Object.entries(sessionStorage).sort());
+    let iframe;
+    try{
+      iframe=await workshop();
+      for(const style of ['wing','plain']){
+        const w=iframe.contentWindow,d=w.document;
+        for(const [id,value] of [['carrier','private carrier e\u0301 👩🏽‍💻'],['payloadA','private first voice'],['payloadB','private second voice']]){d.getElementById(id).value=value;d.getElementById(id).dispatchEvent(new w.Event('input'));}
+        d.getElementById('register').value=style;d.getElementById('register').dispatchEvent(new w.Event('input'));d.getElementById('encode').click();
+        equal(localStorage.getItem(preferenceKey),style);
+        equal(JSON.stringify(Object.entries(localStorage).filter(([key])=>key!==preferenceKey).sort()),storageBefore);
+        equal(JSON.stringify(Object.entries(sessionStorage).sort()),sessionBefore);
+        await frameLoad(iframe,()=>w.location.reload());
+        const reloaded=iframe.contentWindow.document;
+        equal(reloaded.getElementById('register').value,style);
+        equal(reloaded.getElementById('carrier').value,'the diacritics are now free 🐈‍⬛');
+        equal(reloaded.getElementById('payloadA').value,'the archive remembers ✨');
+        equal(reloaded.getElementById('payloadB').value,'the cat keeps a second key 🗝️');
+        equal(reloaded.getElementById('input').value,'');
+        const output=M.decode(reloaded.getElementById('encoded').value);equal(output.a.payload,'the archive remembers ✨');equal(output.b.payload,'the cat keeps a second key 🗝️');
+      }
+    }finally{iframe?.remove();if(saved===null)localStorage.removeItem(preferenceKey);else localStorage.setItem(preferenceKey,saved);}
+  });
+  await test('unknown saved font falls back to the default register',async()=>{
+    const saved=localStorage.getItem(preferenceKey);let iframe;
+    try{localStorage.setItem(preferenceKey,'not-a-catalog-id');iframe=await workshop();equal(iframe.contentWindow.document.getElementById('register').value,'chaos-noodle-ii');}
+    finally{iframe?.remove();if(saved===null)localStorage.removeItem(preferenceKey);else localStorage.setItem(preferenceKey,saved);}
+  });
+  await test('unavailable preference storage does not block initialization or encoding',async()=>{
+    const url=new URL('../zalgo-cipher-v3.html',location.href),response=await fetch(url);assert(response.ok);
+    const html=(await response.text()).replace('<head>','<head><base href="'+url.href+'"><script>Object.defineProperty(window,"localStorage",{get(){throw new DOMException("disabled","SecurityError")}});</script>');
+    const iframe=await workshop(html);
+    try{
+      const w=iframe.contentWindow,d=w.document;equal(d.getElementById('register').value,'chaos-noodle-ii');
+      d.getElementById('register').value='plain';d.getElementById('register').dispatchEvent(new w.Event('input'));
+      d.getElementById('carrier').value='👩🏽‍💻 e\u0301';d.getElementById('encode').click();
+      const result=M.decode(d.getElementById('encoded').value);equal(result.carrier.value,'👩🏽‍💻 e\u0301');equal(result.a.status,'exact');equal(result.b.status,'exact');equal(d.getElementById('status').textContent,'');
+    }finally{iframe.remove();}
+  });
   for(const file of ['zalgo-cipher.html','zalgo-cipher-v2.html']) await test('preserved '+file+' actual browser round trip',async()=>{
     const iframe=document.createElement('iframe');iframe.hidden=true;iframe.src='../'+file;
     await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('legacy page timeout')),10000);iframe.onload=()=>{clearTimeout(timer);resolve();};document.body.append(iframe);});

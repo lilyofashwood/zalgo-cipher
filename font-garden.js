@@ -88,7 +88,14 @@ function invertMap(map){const r={};Object.entries(map).forEach(([k,v])=>{if(!(v 
 const upsideInverse=invertMap(upsideMap),mirrorInverse=invertMap(mirrorMap);
 
 function fullwidth(t){return Array.from(t).map(c=>c===" "?"　":(c.codePointAt(0)>=33&&c.codePointAt(0)<=126?String.fromCodePoint(c.codePointAt(0)+0xFEE0):c)).join("")}
-function reverseTransform(t,map){return Array.from(t).reverse().map(c=>map[c]??map[c.toLowerCase()]??c).join("")}
+// Current catalog repair: orient whole clusters, never reverse their marks/ZWJ components.
+function reverseTransform(t,map){
+  if(typeof Intl==="undefined"||!Intl.Segmenter)return t;
+  return graphemes(t).reverse().map(cluster=>{
+    const [base,...tail]=Array.from(cluster);
+    return (map[base]??map[base.toLowerCase()]??base)+tail.join("");
+  }).join("");
+}
 function everyChar(t,wrap){return graphemes(t).map(c=>/^\s+$/.test(c)?c:wrap(c)).join("")}
 function stripCombining(t){return t.normalize("NFD").replace(/\p{M}+/gu,"").normalize("NFC")}
 function addCombining(t,marks){return Array.from(t).map(c=>isCarrier(c)?c+marks:c).join("")}
@@ -213,4 +220,3 @@ const applyStyle=(id,text)=>{try{return (styleById.get(id)||styleById.get("plain
 
 root.FontGarden={list:()=>styles.map(({fn,...meta})=>meta),apply:(id,text)=>{if(!styleById.has(id))throw new Error("Unknown style: "+id);return applyStyle(id,text);},mix:(text,config)=>routeMix(text,normalizeHouseConfig(config)),register:(entry)=>{if(styleById.has(entry.id))throw new Error("Duplicate style");styles.push(entry);styleById.set(entry.id,entry);},maps};
 })(globalThis);
-

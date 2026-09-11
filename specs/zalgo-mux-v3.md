@@ -66,13 +66,17 @@ The 20-code-point budget comes from a recovered modeled regression, not a univer
 
 `font-garden.js` is an extracted pure catalog from the recovered Veil-Script Font Garden 0.2.1 (50 registers). `register-recipes.js` adds the two missing mathematical italic families, 23 executable interpretations of the recovered synthetic-register descriptions, the recovered Kaomoji Heart/Combining Box ideas and a literal Coral Asemic specimen: 78 choices. Arbitrary custom Unicode works in plain mode.
 
+The current v3 workshop remembers only a validated catalog ID in browser local storage (`ashwood:zalgo-mux3:register:v1`). Selecting Plain remembers custom-carrier mode, not the custom text. Carrier contents, both messages, encoded output and decoder input are not persisted by the app. Unknown IDs or unavailable storage fall back to the default register; encoding remains usable without storage.
+
+Current-v3 catalog correction, 2026-09-10: Mirror Room and Upside Down reverse grapheme clusters and substitute only each cluster's first code point. Combining marks, emoji modifiers, ZWJ sequences, regional-indicator pairs and keycaps keep their internal order. Orientation requires `Intl.Segmenter`; if unavailable, these two styles return the input unchanged instead of splitting its clusters. The MUX encoder itself requires a supported grapheme-segmenting runtime. This is a UI/catalog repair, not a wire-format change or a claim about the unchanged historical v1/v2 artifacts.
+
 The Coral Asemic token dictionary has not been recovered; its choice explicitly uses a literal specimen instead of pretending to translate input. The synthetic register examples are kept as historical artifacts in the Font Garden repo; new code follows the prose rules with explicit indexing decisions described there.
 
 `historical/overlay-key-prototype.py` is a separate recovered prototype: overlay digits encode an ASCII-derived key, which is repeated modulo ten against the primary digit stream. Its old header calls itself “v3,” but it is not this independent MUX format. It is not modern encryption. Neither the complete original `whispers` specimen nor Aureole-MUX tables have been recovered here.
 
 ## Validation
 
-Run `python3 tests/run.py` with Google Chrome, or set `CHROME_BIN` to another compatible executable. Tests use an isolated profile and local HTTP server. The suite verifies all 78 carriers, exact Unicode and escape recovery, removal/corruption isolation, malformed frames, canonical/compatibility normalization behavior, a modeled 20-code-point cap, and real-browser v1/v2 round trips.
+Run `python3 tests/run.py` with Google Chrome, or set `CHROME_BIN` to another compatible executable. Tests use an isolated profile and local HTTP server. The suite verifies all 78 carriers, grapheme-safe orientation, font/custom-mode reload preferences without message storage, unknown/disabled storage, exact Unicode and escape recovery, removal/corruption isolation, malformed frames, canonical/compatibility normalization behavior, a modeled 20-code-point cap, and real-browser v1/v2 round trips.
 
 The historical `transport-boundaries.test.mjs` expected unpublished source patterns absent from both shipped pages. Those assertions have not been represented as passing. The new regression tests verify the newly specified MUX behavior; legacy source is preserved.
 # Evening evidence update · 2026-09-10

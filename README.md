@@ -29,7 +29,7 @@ The original release description below documents the legacy ASCII modes, not MUX
 
 ## A lantern in the margin
 
-This new passage carries a small StegWeb Two Plains Easter egg. Decode only its marked Markdown region with the companion [StegWeb workshop](https://github.com/lilyofashwood/steg.web); the surrounding title styles and code are not part of its channel.
+This new passage carries a small StegWeb Two Plains Easter egg. Decode only its marked Markdown region with [Uniception, the renamed StegWeb workshop](https://github.com/lilyofashwood/uniception); the surrounding title styles and code are not part of its channel. The collection itself now lives in [steg.web](https://github.com/lilyofashwood/steg.web).
 
 <!-- stegweb:legacy:two_plains:start -->
 Each channel alone 𝗋𝖾𝗆𝖾𝗆𝖻𝖾𝗋s the letter it was given. Two rivers meet beneath a borrowed moon; neither needs the other to find the sea. On the bank, a machine sets down its lantern and leaves room for a human hand.
