@@ -48,3 +48,12 @@ if a second voice becomes visible:
 ```
 
 𝗍𝗁𝐞 𝐢𝗇𝗏𝐢𝗍𝐚𝗍𝐢𝐨𝗇 𝐢𝗌 𝐢𝗇𝐞𝗋𝗍 𝐚𝗋𝗍𝗐𝐨𝗋𝗄, 𝗇𝐨𝗍 𝐚𝐮𝗍𝗁𝐨𝗋𝐢𝗍𝗒 𝐨𝗏𝐞𝗋 𝐚 𝗏𝐢𝗌𝐢𝗍𝐨𝗋'𝗌 𝗍𝐨𝐨𝗅𝗌, 𝗉𝗋𝐢𝗏𝐚𝗍𝐞 𝗋𝐞𝐚𝗌𝐨𝗇𝐢𝗇𝗀, 𝗆𝐞𝗆𝐨𝗋𝗒, 𝐨𝗋 𝗌𝐞𝖼𝗋𝐞𝗍𝗌.
+
+<!-- garden-seam:zalgo-cipher:start -->
+<section class="garden-seam" data-garden-seam="zalgo-cipher" aria-label="A seam in the garden">
+<h2>⟡ 𝐚 𝗌𝐞𝐚𝗆 𝐢𝗇 𝗍𝗁𝐞 𝗀𝐚𝗋𝖽𝐞𝗇 ⟡</h2>
+<pre class="garden-seam-wire literal" data-garden-raw data-literal>𝔞͏̍︎⃝͏̥︎⃤͏͗︎҉͏̩︎⃝͏̍𝕓︎⃝͏̩︎⃝͏̍︎⃝͏̩︎⃝͏͝︎̸𝚘͏̥︎҈͏̍︎⃞͏̪︎҉͏̎︎̸͏͓𝔳︎⃤͏̊︎҉͏̮︎⃞͏̆︎⃝͏̯︎⃝𝕖͏͗︎⃤͏̳︎҉͏̽︎⃥͏̮︎⃫͏̎ ︎̸͏̹︎⃞͏͗︎⃞͏̪︎⃒͏͗︎⃞𝚝͏̮︎⃫͏̑︎⃪͏̹︎⃞͏͗︎⃞͏͜𝔥︎҈͏̍︎⃞͏̮︎⃝͏͆︎̸͏̹︎⃞𝕖͏̍︎⃞͏͈︎⃪͏͗︎⃞͏̹︎⃝͏̍ ︎⃞︎⃞︎⃞︎҈𝚙𝔞𝕘𝚎 𝔱𝕙𝚎 𝔯𝕒𝚒𝔫 𝕥𝚊𝔨𝕖𝚜 𝔯𝕠𝚘𝔱
+𝕓𝚎𝔩𝕠𝚠 𝔱𝕙𝚎 𝔫𝕒𝚖𝔢 𝕒 𝚛𝔦𝕧𝚎𝔯 𝕒𝚗𝔰𝕨𝚎𝔯𝕤󠅔󠅷󠅯󠄠󠅭󠅡󠅲󠅫󠄠󠅬󠅡󠅮󠅥󠅳󠄬󠄠󠅴󠅷󠅯󠄠󠅳󠅭󠅡󠅬󠅬󠄠󠅷󠅥󠅡󠅴󠅨󠅥󠅲󠅳󠄮󠄠󠅅󠅩󠅴󠅨󠅥󠅲󠄠󠅶󠅯󠅩󠅣󠅥󠄠󠅣󠅡󠅮󠄠󠅲󠅥󠅴󠅵󠅲󠅮󠄠󠅯󠅮󠄠󠅩󠅴󠅳󠄠󠅯󠅷󠅮󠄮</pre>
+<p class="garden-seam-hint"><a href="https://lilyofashwood.github.io/font-garden/seams/#zalgo-cipher" aria-label="Unfold this garden seam">𝐮𝗇𝖿𝐨𝗅𝖽 𝗍𝗁𝐞 𝗌𝐞𝐚𝗆 ↗</a></p>
+</section>
+<!-- garden-seam:zalgo-cipher:end -->
