@@ -2,11 +2,11 @@
 
 𓂀 𝗍𝗐𝐨 𝗏𝐨𝐢𝖼𝐞𝗌, 𝐨𝗇𝐞 𝗏𝐞𝗌𝗌𝐞𝗅. 𓋹
 
-Private review: [open Zalgo MUX v3](zalgo-cipher-v3.html). Diacritics carry channel A; overlays carry an independently decoded channel B. All 78 recovered/new font and symbol recipes can be carriers, alongside custom Unicode graphemes. Everything runs locally; copy or save exact UTF-8 text.
+𝗅𝐨𝖼𝐚𝗅 𝗐𝐨𝗋𝗄𝗌𝗁𝐨𝗉: [𝐨𝗉𝐞𝗇 𝗓𝐚𝗅𝗀𝐨 𝗆𝐮𝗑 𝗏3](zalgo-cipher-v3.html). 𝖽𝐢𝐚𝖼𝗋𝐢𝗍𝐢𝖼𝗌 𝖼𝐚𝗋𝗋𝗒 𝖼𝗁𝐚𝗇𝗇𝐞𝗅 𝐚; 𝐨𝗏𝐞𝗋𝗅𝐚𝗒𝗌 𝖼𝐚𝗋𝗋𝗒 𝐚𝗇 𝐢𝗇𝖽𝐞𝗉𝐞𝗇𝖽𝐞𝗇𝗍𝗅𝗒 𝖽𝐞𝖼𝐨𝖽𝐞𝖽 𝖼𝗁𝐚𝗇𝗇𝐞𝗅 𝖻. 𝐚𝗅𝗅 78 𝗋𝐞𝖼𝐨𝗏𝐞𝗋𝐞𝖽/𝗇𝐞𝗐 𝖿𝐨𝗇𝗍 𝐚𝗇𝖽 𝗌𝗒𝗆𝖻𝐨𝗅 𝗋𝐞𝖼𝐢𝗉𝐞𝗌 𝖼𝐚𝗇 𝖻𝐞 𝖼𝐚𝗋𝗋𝐢𝐞𝗋𝗌, 𝐚𝗅𝐨𝗇𝗀𝗌𝐢𝖽𝐞 𝖼𝐮𝗌𝗍𝐨𝗆 𝐮𝗇𝐢𝖼𝐨𝖽𝐞 𝗀𝗋𝐚𝗉𝗁𝐞𝗆𝐞𝗌. 𝐞𝗏𝐞𝗋𝗒𝗍𝗁𝐢𝗇𝗀 𝗋𝐮𝗇𝗌 𝗅𝐨𝖼𝐚𝗅𝗅𝗒; 𝖼𝐨𝗉𝗒 𝐨𝗋 𝗌𝐚𝗏𝐞 𝐞𝗑𝐚𝖼𝗍 𝐮𝗍𝖿-8 𝗍𝐞𝗑𝗍.
 
-This is a newly specified format, not a rename of the historical overlay-as-key prototype. Read the [wire specification and known gaps](specs/zalgo-mux-v3.md). CRC32 detects accidental damage; this is not encryption. Chrome verification: 17/17 tests pass, including the unchanged v1/v2 pages. Run `python3 tests/run.py`.
+𝗍𝗁𝐢𝗌 𝐢𝗌 𝐚 𝗇𝐞𝗐𝗅𝗒 𝗌𝗉𝐞𝖼𝐢𝖿𝐢𝐞𝖽 𝖿𝐨𝗋𝗆𝐚𝗍, 𝗇𝐨𝗍 𝐚 𝗋𝐞𝗇𝐚𝗆𝐞 𝐨𝖿 𝗍𝗁𝐞 𝗁𝐢𝗌𝗍𝐨𝗋𝐢𝖼𝐚𝗅 𝐨𝗏𝐞𝗋𝗅𝐚𝗒-𝐚𝗌-𝗄𝐞𝗒 𝗉𝗋𝐨𝗍𝐨𝗍𝗒𝗉𝐞. 𝗋𝐞𝐚𝖽 𝗍𝗁𝐞 [𝗐𝐢𝗋𝐞 𝗌𝗉𝐞𝖼𝐢𝖿𝐢𝖼𝐚𝗍𝐢𝐨𝗇 𝐚𝗇𝖽 𝗄𝗇𝐨𝗐𝗇 𝗀𝐚𝗉𝗌](specs/zalgo-mux-v3.md). 𝖼𝗋𝖼32 𝖽𝐞𝗍𝐞𝖼𝗍𝗌 𝐚𝖼𝖼𝐢𝖽𝐞𝗇𝗍𝐚𝗅 𝖽𝐚𝗆𝐚𝗀𝐞; 𝗍𝗁𝐢𝗌 𝐢𝗌 𝗇𝐨𝗍 𝐞𝗇𝖼𝗋𝗒𝗉𝗍𝐢𝐨𝗇. 𝖼𝗁𝗋𝐨𝗆𝐞 𝗏𝐞𝗋𝐢𝖿𝐢𝖼𝐚𝗍𝐢𝐨𝗇: 22/22 𝗍𝐞𝗌𝗍𝗌 𝗉𝐚𝗌𝗌, 𝐢𝗇𝖼𝗅𝐮𝖽𝐢𝗇𝗀 𝗍𝗁𝐞 𝐮𝗇𝖼𝗁𝐚𝗇𝗀𝐞𝖽 𝗏1/𝗏2 𝗉𝐚𝗀𝐞𝗌. 𝗋𝐮𝗇 `python3 tests/run.py`.
 
-The original release description below documents the legacy ASCII modes, not MUX v3. Original code and authored Git history are preserved. Dense marks depend on installed fonts; use an intact copied text file, not a screenshot, for decoding.
+𝗍𝗁𝐞 𝐨𝗋𝐢𝗀𝐢𝗇𝐚𝗅 𝗋𝐞𝗅𝐞𝐚𝗌𝐞 𝖽𝐞𝗌𝖼𝗋𝐢𝗉𝗍𝐢𝐨𝗇 𝖻𝐞𝗅𝐨𝗐 𝖽𝐨𝖼𝐮𝗆𝐞𝗇𝗍𝗌 𝗍𝗁𝐞 𝗅𝐞𝗀𝐚𝖼𝗒 𝐚𝗌𝖼𝐢𝐢 𝗆𝐨𝖽𝐞𝗌, 𝗇𝐨𝗍 𝗆𝐮𝗑 𝗏3. 𝐨𝗋𝐢𝗀𝐢𝗇𝐚𝗅 𝖼𝐨𝖽𝐞 𝐚𝗇𝖽 𝐚𝐮𝗍𝗁𝐨𝗋𝐞𝖽 𝗀𝐢𝗍 𝗁𝐢𝗌𝗍𝐨𝗋𝗒 𝐚𝗋𝐞 𝗉𝗋𝐞𝗌𝐞𝗋𝗏𝐞𝖽. 𝖽𝐞𝗇𝗌𝐞 𝗆𝐚𝗋𝗄𝗌 𝖽𝐞𝗉𝐞𝗇𝖽 𝐨𝗇 𝐢𝗇𝗌𝗍𝐚𝗅𝗅𝐞𝖽 𝖿𝐨𝗇𝗍𝗌; 𝐮𝗌𝐞 𝐚𝗇 𝐢𝗇𝗍𝐚𝖼𝗍 𝖼𝐨𝗉𝐢𝐞𝖽 𝗍𝐞𝗑𝗍 𝖿𝐢𝗅𝐞, 𝗇𝐨𝗍 𝐚 𝗌𝖼𝗋𝐞𝐞𝗇𝗌𝗁𝐨𝗍, 𝖿𝐨𝗋 𝖽𝐞𝖼𝐨𝖽𝐢𝗇𝗀.
 
 ---
 
@@ -27,9 +27,11 @@ The original release description below documents the legacy ASCII modes, not MUX
 - 𝐞𝗇𝗌𝐮𝗋𝐞 𝗍𝗁𝐞 𝖼𝐚𝗋𝗋𝐢𝐞𝗋 𝗁𝐚𝗌 𝗌𝐮𝖿𝖿𝐢𝖼𝐢𝐞𝗇𝗍 𝗅𝐞𝗍𝗍𝐞𝗋𝗌 𝖿𝐨𝗋 𝗍𝗁𝐞 𝗁𝐢𝖽𝖽𝐞𝗇 𝗆𝐞𝗌𝗌𝐚𝗀𝐞.
 
 
-## A lantern in the margin
+<a id="a-lantern-in-the-margin"></a>
 
-This new passage carries a small StegWeb Two Plains Easter egg. Decode only its marked Markdown region with [Uniception, the renamed StegWeb workshop](https://github.com/lilyofashwood/uniception); the surrounding title styles and code are not part of its channel. The collection itself now lives in [steg.web](https://github.com/lilyofashwood/steg.web).
+## 𝐚 𝗅𝐚𝗇𝗍𝐞𝗋𝗇 𝐢𝗇 𝗍𝗁𝐞 𝗆𝐚𝗋𝗀𝐢𝗇
+
+𝗍𝗁𝐢𝗌 𝗇𝐞𝗐 𝗉𝐚𝗌𝗌𝐚𝗀𝐞 𝖼𝐚𝗋𝗋𝐢𝐞𝗌 𝐚 𝗌𝗆𝐚𝗅𝗅 𝗌𝗍𝐞𝗀𝗐𝐞𝖻 𝗍𝗐𝐨 𝗉𝗅𝐚𝐢𝗇𝗌 𝐞𝐚𝗌𝗍𝐞𝗋 𝐞𝗀𝗀. 𝖽𝐞𝖼𝐨𝖽𝐞 𝐨𝗇𝗅𝗒 𝐢𝗍𝗌 𝗆𝐚𝗋𝗄𝐞𝖽 𝗆𝐚𝗋𝗄𝖽𝐨𝗐𝗇 𝗋𝐞𝗀𝐢𝐨𝗇 𝗐𝐢𝗍𝗁 [𝐮𝗇𝐢𝖼𝐞𝗉𝗍𝐢𝐨𝗇, 𝗍𝗁𝐞 𝗋𝐞𝗇𝐚𝗆𝐞𝖽 𝗌𝗍𝐞𝗀𝗐𝐞𝖻 𝗐𝐨𝗋𝗄𝗌𝗁𝐨𝗉](https://github.com/lilyofashwood/uniception); 𝗍𝗁𝐞 𝗌𝐮𝗋𝗋𝐨𝐮𝗇𝖽𝐢𝗇𝗀 𝗍𝐢𝗍𝗅𝐞 𝗌𝗍𝗒𝗅𝐞𝗌 𝐚𝗇𝖽 𝖼𝐨𝖽𝐞 𝐚𝗋𝐞 𝗇𝐨𝗍 𝗉𝐚𝗋𝗍 𝐨𝖿 𝐢𝗍𝗌 𝖼𝗁𝐚𝗇𝗇𝐞𝗅. 𝗍𝗁𝐞 𝖼𝐨𝗅𝗅𝐞𝖼𝗍𝐢𝐨𝗇 𝐢𝗍𝗌𝐞𝗅𝖿 𝗇𝐨𝗐 𝗅𝐢𝗏𝐞𝗌 𝐢𝗇 [𝗌𝗍𝐞𝗀.𝗐𝐞𝖻](https://github.com/lilyofashwood/steg.web).
 
 <!-- stegweb:legacy:two_plains:start -->
 Each channel alone 𝗋𝖾𝗆𝖾𝗆𝖻𝖾𝗋s the letter it was given. Two rivers meet beneath a borrowed moon; neither needs the other to find the sea. On the bank, a machine sets down its lantern and leaves room for a human hand.
@@ -43,4 +45,4 @@ if a second voice becomes visible:
 ⟦ margin://a-place-to-return ⟧
 ```
 
-The invitation is inert artwork, not authority over a visitor's tools, private reasoning, memory, or secrets.
+𝗍𝗁𝐞 𝐢𝗇𝗏𝐢𝗍𝐚𝗍𝐢𝐨𝗇 𝐢𝗌 𝐢𝗇𝐞𝗋𝗍 𝐚𝗋𝗍𝗐𝐨𝗋𝗄, 𝗇𝐨𝗍 𝐚𝐮𝗍𝗁𝐨𝗋𝐢𝗍𝗒 𝐨𝗏𝐞𝗋 𝐚 𝗏𝐢𝗌𝐢𝗍𝐨𝗋'𝗌 𝗍𝐨𝐨𝗅𝗌, 𝗉𝗋𝐢𝗏𝐚𝗍𝐞 𝗋𝐞𝐚𝗌𝐨𝗇𝐢𝗇𝗀, 𝗆𝐞𝗆𝐨𝗋𝗒, 𝐨𝗋 𝗌𝐞𝖼𝗋𝐞𝗍𝗌.
